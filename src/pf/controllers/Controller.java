@@ -179,6 +179,23 @@ public class Controller {
     }
   }
 
+  public void idealizeSecondary() {
+    boolean hasSecondaryStructure = (
+        RRUtils.secondarySequence != null &&
+        RRUtils.secondarySequence.length() == RRUtils.aminoSequence.length());
+    if (!hasSecondaryStructure) return;
+    int n = RRUtils.sequenceLen;
+    // Considering tetra-peptides
+    for (int i = 1; i < n-1; i++) {
+      char ss = angles[i].ss;
+      if (ss != 'C') {
+        angles[i].theta = Limits.idealPlanar(ss);
+        if (i != n-2) angles[i].tao = Limits.idealDihedral(ss);
+      }
+    }
+    updateStructure(angles, /*updateZoom=*/true);
+  }
+
   /* Rebuild residue array based on new cartesian locations */
   public static void setResidueArray() {
     carts = Converter.anglesToCarts(angles);
@@ -672,7 +689,8 @@ public class Controller {
   }
 
   // Non-crtitical UI controls
-  @FXML Button gradDescentBtn, infoBtn, monteCarloBtn, redoBtn, undoBtn;
+  @FXML Button gradDescentBtn, idealizeBtn, infoBtn, monteCarloBtn, redoBtn,
+               undoBtn;
   @FXML MenuBar menubar;
   @FXML ToggleButton autoZoomBtn;
   /* Disable all non-critical elements of UI to prevent users from running
@@ -681,8 +699,8 @@ public class Controller {
    */
   public void disableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
-      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn,
-      undoBtn
+      autoZoomBtn, gradDescentBtn, idealizeBtn, infoBtn, menubar, monteCarloBtn,
+      redoBtn, undoBtn
     };
     for (Node n : nonCritical) n.setDisable(true);
   }
@@ -690,8 +708,8 @@ public class Controller {
   /* Enable non-critical UI elements upon completion of volatile function */
   public void enableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
-      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn,
-      undoBtn
+      autoZoomBtn, gradDescentBtn, idealizeBtn, infoBtn, menubar, monteCarloBtn,
+      redoBtn, undoBtn
     };
     for (Node n : nonCritical) n.setDisable(false);
   }
