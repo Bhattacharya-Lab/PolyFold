@@ -76,6 +76,11 @@ Now let's explore the tool bar.
 
 The AutoZoom button attempts to move the PolyFold camera such that the majority of the protein structure is rendered in the current frame. It can also be activated by pressing the "A" key. 
 
+![repair button](src/resources/readme/hammer.png)
+##### Repair Button
+
+The Repair button idealizes all of the planar and dihedral angles for each alpha helix and beta strand residue in the current protein.
+
 ![gradient descent button](src/resources/readme/gd.png)
 ##### Gradient Descent Button
 
