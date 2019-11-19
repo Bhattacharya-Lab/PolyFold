@@ -1,8 +1,8 @@
 # define compiler flags
 J_FLAGS = -g
 JFX_FLAGS = --module-path $(JAVAFX_HOME) --add-modules javafx.controls,javafx.fxml,javafx.swing
-JC = $(PF_JAVAC)
-J = $(PF_JAVA)
+JC = javac
+J = java 
 MAIN = PolyFold
 
 # clear default definitions
