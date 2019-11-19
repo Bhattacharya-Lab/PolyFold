@@ -193,10 +193,10 @@ public class AuxController {
     decaySlider.setMin(0.0);
     decaySlider.setMax(1.0);
     decaySlider.setValue(MonteCarlo.decay);
-    startTempSlider.setMin(0.8);
+    startTempSlider.setMin(0.5);
     startTempSlider.setMax(1.0);
     startTempSlider.setValue(MonteCarlo.startTemp);
-    termTempSlider.setMin(0.01);
+    termTempSlider.setMin(0.0);
     termTempSlider.setMax(0.2);
     termTempSlider.setValue(MonteCarlo.terminalTemp);
     // Build scene
