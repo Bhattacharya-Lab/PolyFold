@@ -117,6 +117,10 @@
                           styleClass="autoZoomButton">
               <tooltip><Tooltip text="Toggle Auto Zoom"/></tooltip>
             </ToggleButton>
+            <Button fx:id="idealizeBtn" onAction="#idealizeSecondary"
+                    styleClass="idealizeButton">
+              <tooltip><Tooltip text="Idealize Secondary Structure"/></tooltip>
+            </Button>
           </HBox>
           <HBox id="middleTools">
             <Button fx:id="stopOptimizationBtn" onAction="#setKillOptimization" 
