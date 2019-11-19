@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.stage.Stage?>
+
+<BorderPane fx:id="aboutPane" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" styleClass="alert">
+  <top>
+    <HBox>
+      <VBox>
+        <Label styleClass="alert-header" text="PolyFold, Beta Version 1.0.0"/>
+      </VBox>
+      <VBox styleClass="alert-graphic">
+        <Button fx:id="logoBtn" styleClass="logo-btn"></Button>
+      </VBox>
+    </HBox>
+  </top>
+  <center>
+    <VBox style="-fx-spacing: 12">
+      <VBox>
+        <Label styleClass="alert-content"
+               text="Developed by: Andrew J. McGehee, Hudson Chromy"
+               wrapText="true"/>
+        <Label styleClass="alert-content"
+               text="Copyright &#169; Bhattacharya Laboratory 2019-2025, All rights reserved."
+               wrapText="true"/>
+      </VBox>
+      <VBox>
+        <Label styleClass="alert-content"
+               text="Click License to display GNU General Public License details."
+               wrapText="true"/>
+        <Label styleClass="alert-content"
+               text="Click Website to visit the PolyFold website."
+               wrapText="true"/>
+      </VBox>
+      <HBox>
+        <HBox styleClass="alert-actions">
+          <Button fx:id="websiteBtn" text="Website"/>
+          <Button fx:id="licenseBtn" text="License"/>
+        </HBox>
+        <HBox styleClass="alert-cancel">
+          <Button fx:id="cancelBtn" text="Cancel"/>
+        </HBox>
+      </HBox>
+    </VBox>
+  </center>
+</BorderPane>

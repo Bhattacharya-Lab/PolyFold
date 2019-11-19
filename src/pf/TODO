@@ -1,0 +1,32 @@
+.
+├── camera
+│   └── pfCamera.java
+├── controllers
+│   ├── AuxController.java
+│   ├── CONTROLLER_TODO
+│   └── Controller.java
+├── coreutils
+│   ├── FileUtils.java
+│   ├── History.java
+│   ├── Limits.java
+│   ├── Maps.java
+│   ├── RRUtils.java
+│   ├── Scoring.java
+│   ├── Shortcuts.java
+│   └── State.java
+├── geometry
+│   ├── Chirality.java
+│   └── LinearAlgebra.java
+├── optimizations
+│   ├── GradientDescent.java
+│   └── MonteCarlo.java
+├── representations
+│   ├── Angular.java
+│   ├── Cartesian.java
+│   ├── Converter.java
+│   ├── Point.java
+│   └── Residue.java
+├── ui
+│   ├── Colors.java
+│   └── ViewPort.java
+└── TODO

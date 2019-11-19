@@ -1,0 +1,14 @@
+  generateDistanceMap() 
+  buildDistanceMap() 
+  updateScore() 
+  getCurrentScore() 
+  getDistance(Residue a, Residue b) 
+  updateDistanceMap(double mse) 
+  updateMapColors() 
+  saveToPDB() throws IOException 
+  writeToPDB(File f) throws IOException 
+  startGradientDescent() 
+  gradientDescent() 
+  updateResiduePoints()
+  monteCarlo()
+  startMonteCarlo()

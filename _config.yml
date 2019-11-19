@@ -1,0 +1,6 @@
+title: PolyFold
+description: An interactive visual simulator for distance-based protein folding dynamics
+logo: /src/resources/logo.png
+theme: jekyll-theme-slate
+google_analytics:
+show_downloads: true
