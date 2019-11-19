@@ -164,7 +164,8 @@
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
   -fx-min-height: 30px;
-  -fx-min-width: 44px;}
+  -fx-min-width: 44px;
+}
 
 .autoZoomButton:pressed {
   -fx-scale-x: 0.97;
@@ -173,6 +174,23 @@
 
 .autoZoomButton:selected {
   -fx-background-color: #99c794;
+}
+
+.idealizeButton {
+  -fx-background-color: #99a6a8;
+  -fx-background-radius: 5,5,4;
+  -fx-padding: 3 15 3 15;
+  -fx-background-image: url("../resources/hammer.png");
+  -fx-background-size: 24px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+  -fx-min-height: 30px;
+  -fx-min-width: 44px;
+}
+
+.idealizeButton:pressed {
+  -fx-scale-x: 0.97;
+  -fx-scale-y: 0.97;
 }
 
 .progress-bar {
@@ -386,11 +404,11 @@
 }
 
 .gd-slider > #startTempSlider {
-  -fx-major-tick-unit: 0.01;
+  -fx-major-tick-unit: 0.05;
 }
 
 .gd-slider > #termTempSlider {
-  -fx-major-tick-unit: 0.01;
+  -fx-major-tick-unit: 0.02;
 }
 
 .gd-slider > .slider .axis {
