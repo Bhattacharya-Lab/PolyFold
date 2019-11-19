@@ -36,7 +36,10 @@ public class MonteCarlo {
   public static void setStartTemp(double temp) { startTemp = temp; }
 
   /* Set terminal temperature */
-  public static void setTerminalTemp(double temp) { terminalTemp = temp; }
+  public static void setTerminalTemp(double temp) {
+    if (temp <= 0) temp = 0.001;
+    terminalTemp = temp;
+  }
 
   /* Utility to test completion condition */
   public static boolean complete() { return temperature <= terminalTemp; }
