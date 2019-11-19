@@ -11,9 +11,9 @@ certain types of proteins respond to certain types of optimization strategies.
 No prior scientific background is needed to work with PolyFold. It is built
 entirely with human intuition in mind.
 
-### How to Compile and Run the Source Code
+## How to Compile and Run the Source Code
 
-#### Using Make
+### Using Make
 1. Run the following line to compile the code:
 ```
 $ make
@@ -23,7 +23,7 @@ $ make
 $ make run
 ```
 
-#### Using the JRE
+### Using the JRE
 1. Run the following line to compile the code:
 ```
 $ javac PolyFold.java
@@ -32,7 +32,7 @@ $ javac PolyFold.java
 ```
 $ java PolyFold
 ```
-### Manual
+## Manual
 
 Upon opening PolyFold you will be greeted by a screen which looks similar to this:
 
@@ -40,68 +40,68 @@ Upon opening PolyFold you will be greeted by a screen which looks similar to thi
 
 You will notice that there is a menu bar and a tool bar at the top of the screen. Let's go through each item of the menu bar. 
 
-#### Menu Bar
+### Menu Bar
 
-##### File Menu
+#### File Menu
 ![file menu](src/resources/readme/file.png)
 
 The file menu contains options for opening ".rr" files and saving the current state of a folded protein in PolyFold as a ".pdb" file. 
 
-##### Edit Menu
+#### Edit Menu
 ![edit menu](src/resources/readme/edit.png)
 
 The edit menu contains options to Undo and Redo changes made within PolyFold, as well as to Save or Load a named save state of a folded protein from the current PolyFold session.
 
-##### Window Menu
+#### Window Menu
 ![window menu](src/resources/readme/window.png)
 
 The window menu contains options for minimizing the current window or making it full screen.
 
-##### Configure Menu
+#### Configure Menu
 ![configure menu](src/resources/readme/configure.png)
 
 The configure window contains options for changing the configuration of either the gradient descent or the Monte Carlo optimization strategies.
 
-##### Help Menu
+#### Help Menu
 ![help menu](src/resources/readme/help.png)
 
 The help menu contains an option for opening PolyFold's "About" window. This contains information about the application, authors, and license of PolyFold. It can also redirect you to PolyFold's website hosted on GitHub.
 
 Now let's explore the tool bar.
 
-#### Tool Bar
+### Tool Bar
 
 ![auto zoom button](src/resources/readme/autozoom.png)
-##### AutoZoom Button
+#### AutoZoom Button
 
 The AutoZoom button attempts to move the PolyFold camera such that the majority of the protein structure is rendered in the current frame. It can also be activated by pressing the "A" key. 
 
 ![repair button](src/resources/readme/hammer.png)
-##### Repair Button
+#### Repair Button
 
 The Repair button idealizes all of the planar and dihedral angles for each alpha helix and beta strand residue in the current protein.
 
 ![gradient descent button](src/resources/readme/gd.png)
-##### Gradient Descent Button
+#### Gradient Descent Button
 
 The Gradient Descent button will start a gradient descent optimization on the current protein structure.
 
 ![monte carlo button](src/resources/readme/mc.png)
-##### Monte Carlo Button
+#### Monte Carlo Button
 
 The Monte Carlo button will start a Monte Carlo optimization on the current protein structure. 
 
 ![undo button](src/resources/readme/undo.png)
-##### Undo Button
+#### Undo Button
 
 The Undo button will undo the previous change that was applied to the current protein structure.
 
 ![redo button](src/resources/readme/redo.png)
-##### Redo Button
+#### Redo Button
 
 The Redo button will redo the previous change that was applied to the current protein structure.
 
 ![info button](src/resources/readme/info.png)
-##### Info Button
+#### Info Button
 
 The Info button opens PolyFold's "About" window. This contains information about the application, authors, and license of PolyFold. It can also redirect you to PolyFold's website hosted on GitHub.
