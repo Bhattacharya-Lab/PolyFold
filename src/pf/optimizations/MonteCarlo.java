@@ -26,7 +26,7 @@ public class MonteCarlo {
   public static void setup() {
     temperature = startTemp;
     lowest = null;
-    energy = 1.0;
+    energy = Limits.INF;
   }
 
   /* Set the random seed */
@@ -58,16 +58,15 @@ public class MonteCarlo {
    * temperature and decay
    */
   public static void setTemperature(int iter) {
-    temperature = Math.pow(decay, iter / itersPerDecayLevel);
+    temperature = startTemp * Math.pow(decay, iter / itersPerDecayLevel);
   }
 
   /* Return the acceptance probability of a given cost with a given
    * temperature
    */
-  public static boolean acceptProbability(double nextScore, double currScore) {
-    if (nextScore > currScore) return true;
-    double percentError = Scoring.scorePercentage(nextScore - currScore);
-    return random.nextDouble() < Math.exp(percentError / temperature);
+  public static boolean acceptProbability(double energyPrime, double energy) {
+    double probability = Math.exp((energy - energyPrime) / temperature);
+    return random.nextDouble() < probability;
   }
 
   /* Get next state of angles array after applying random to walk to k-Mer */
@@ -98,15 +97,13 @@ public class MonteCarlo {
     Angular[] nextState = getRandomNeighbor(currState);
     Residue[] residues = Converter.anglesToResidues(nextState);
     double[][] adj = LinearAlgebra.adjacencyMatrix(residues);
-    double scorePrime = Scoring.calculateScore(adj);
-    double energyPrime = scoreToEnergy(scorePrime);
+    double energyPrime = scoreToEnergy(Scoring.calculateScore(adj));
     if (energyPrime < energy) {
       lowest = nextState;
       energy = energyPrime;
-    }
-    if (acceptProbability(Scoring.score, scorePrime)) {
       return nextState;
     }
+    if (acceptProbability(energyPrime, energy)) return nextState;
     return currState;
   }
 

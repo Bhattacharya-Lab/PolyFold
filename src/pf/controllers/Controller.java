@@ -596,19 +596,25 @@ public class Controller {
   public void gradientDescent() {
     for (int i = 0; i <= GradientDescent.iterations; i++) {
       if (killOptimization) return;
-      try {
-        carts = GradientDescent.getNextState(residues);
-        if (i % UPDATE_RATE == 0) {
+      carts = GradientDescent.getNextState(residues);
+      if (i % UPDATE_RATE == 0) {
+        try {
           Platform.runLater(() -> {
             updateStructure(Converter.cartsToAngles(carts));
           });
+        } catch (Exception exc) {
+          exc.printStackTrace();
         }
-      } catch (Exception e) {}
+      }
     }
-    Platform.runLater(() -> {
-      updateStructure(angles);
-      showOptimizationComplete();
-    });
+    try {
+      Platform.runLater(() -> {
+        updateStructure(angles);
+        showOptimizationComplete();
+      });
+    } catch (Exception exc) {
+      exc.printStackTrace();
+    }
   }
 
   public void updateStructure(Angular[] update) {
@@ -653,23 +659,29 @@ public class Controller {
     int i = 0;
     while (!MonteCarlo.complete()) {
       if (killOptimization) return;
-      try {
-        MonteCarlo.setTemperature(i);
-        angles = MonteCarlo.getNextState(angles);
-        if (i % UPDATE_RATE == 0) {
+      MonteCarlo.setTemperature(i);
+      angles = MonteCarlo.getNextState(angles);
+      if (i % UPDATE_RATE == 0) {
+        try {
           Platform.runLater(() -> updateStructure(angles));
+        } catch (Exception exc) {
+          exc.printStackTrace();
         }
-        i++;
-      } catch (Exception e) {}
-    }
-    Platform.runLater(() -> {
-      updateStructure(angles);
-      if ( MonteCarlo.scoreToEnergy(Scoring.score) > MonteCarlo.energy) {
-        showRecoverLowest();
-      } else {
-        showOptimizationComplete();
       }
-    });
+      i++;
+    }
+    try {
+      Platform.runLater(() -> {
+        updateStructure(angles);
+        if (MonteCarlo.scoreToEnergy(Scoring.score) > MonteCarlo.energy) {
+          showRecoverLowest();
+        } else {
+          showOptimizationComplete();
+        }
+      });
+    } catch (Exception exc) {
+      exc.printStackTrace();
+    }
   }
 
   /* Undo a move */
