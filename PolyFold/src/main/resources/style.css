@@ -15,7 +15,7 @@
 
 #rightLogo {
   -fx-background-color: transparent;
-  -fx-background-image: url("../resources/logo.png");
+  -fx-background-image: url("/logo.png");
   -fx-background-size: contain;
   -fx-background-repeat: no-repeat;
   -fx-background-position: bottom;
@@ -159,7 +159,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/autozoom.png");
+  -fx-background-image: url("/autozoom.png");
   -fx-background-size: 30px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -180,7 +180,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/hammer.png");
+  -fx-background-image: url("/hammer.png");
   -fx-background-size: 24px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -203,7 +203,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/undo.png");
+  -fx-background-image: url("/undo.png");
   -fx-background-size: 14px 22px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -215,7 +215,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/redo.png");
+  -fx-background-image: url("/redo.png");
   -fx-background-size: 14px 22px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -227,7 +227,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/info.png");
+  -fx-background-image: url("/info.png");
   -fx-background-size: 25px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -239,7 +239,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/gd.png");
+  -fx-background-image: url("/gd.png");
   -fx-background-size: 30px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center 1px;
@@ -251,7 +251,7 @@
   -fx-background-color: #99a6a8;
   -fx-background-radius: 5,5,4;
   -fx-padding: 3 15 3 15;
-  -fx-background-image: url("../resources/mc.png");
+  -fx-background-image: url("/mc.png");
   -fx-background-size: 26px;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -361,7 +361,7 @@
   -fx-padding: 0;
   -fx-background-color: transparent !important;
   -fx-background-radius: 0;
-  -fx-background-image: url("../resources/logo.png");
+  -fx-background-image: url("/logo.png");
   -fx-background-size: 60px;
   -fx-min-height: 60px;
   -fx-min-width: 60px;
@@ -370,15 +370,15 @@
 }
 
 .gear-img {
-  -fx-image: url("../resources/gear.png");
+  -fx-image: url("/gear.png");
 }
 
 .page-img {
-  -fx-image: url("../resources/page.png");
+  -fx-image: url("/page.png");
 }
 
 .info-img {
-  -fx-image: url("../resources/info.png"); 
+  -fx-image: url("/info.png"); 
 }
 
 .gd-slider {
@@ -432,7 +432,7 @@
 #splash {
   visibility: hidden;
   -fx-background-color: transparent;
-  -fx-background-image: url("../resources/thumb_transparent.png");
+  -fx-background-image: url("/thumb_transparent.png");
   -fx-background-size: cover;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;
@@ -526,60 +526,60 @@
 }
 
 .zero {
-  -fx-image: url("../resources/zero.jpg");
+  -fx-image: url("/zero.jpg");
   -fx-scale-x: 0.6;
   -fx-scale-y: 0.6;
 }
 
 .pi {
-  -fx-image: url("../resources/pi.jpg");
+  -fx-image: url("/pi.jpg");
   -fx-scale-x: 0.6;
   -fx-scale-y: 0.6;
 }
 
 .negpi {
-  -fx-image: url("../resources/negpi.jpg");
+  -fx-image: url("/negpi.jpg");
   -fx-scale-x: 0.6;
   -fx-scale-y: 0.6;
 }
 
 #autozoom {
-  -fx-image: url("../resources/autozoomhelp.jpg");
+  -fx-image: url("/autozoomhelp.jpg");
   visibility: hidden;
 }
 
 #editing {
-  -fx-image: url("../resources/edithelp.jpg");
+  -fx-image: url("/edithelp.jpg");
   visibility: hidden;
 }
 
 #files {
-  -fx-image: url("../resources/filehelp.jpg");
+  -fx-image: url("/filehelp.jpg");
   visibility: hidden;
 }
 
 #measurement {
-  -fx-image: url("../resources/scorehelp.jpg");
+  -fx-image: url("/scorehelp.jpg");
   visibility: hidden;
 }
 
 #menus {
-  -fx-image: url("../resources/menushelp.jpg");
+  -fx-image: url("/menushelp.jpg");
   visibility: hidden;
 }
 
 #movement {
-  -fx-image: url("../resources/movehelp.jpg");
+  -fx-image: url("/movehelp.jpg");
   visibility: hidden;
 }
 
 #optimization {
-  -fx-image: url("../resources/graddescenthelp.jpg");
+  -fx-image: url("/graddescenthelp.jpg");
   visibility: hidden;
 }
 
 #undoredo {
-  -fx-image: url("../resources/undoredohelp.jpg");
+  -fx-image: url("/undoredohelp.jpg");
   visibility: hidden;
 }
 
