@@ -2,7 +2,6 @@ package pf.coreutils;
 
 import java.util.*;
 
-import pf.coreutils.State;
 import pf.representations.Angular;
 
 public class History {
@@ -24,7 +23,7 @@ public class History {
     return currentState;
   }
 
-  /* Go forward exectly one state and save current state to undo */
+  /* Go forward exactly one state and save current state to undo */
   public static State redo() {
     if (redos.empty()) return null;
     undos.push(currentState);
@@ -61,7 +60,7 @@ public class History {
   }
 
   public static void clear() {
-    for (int i = 0; i < quickSaves.length; i++) quickSaves[i] = null;
+    Arrays.fill(quickSaves, null);
     namedStates.clear();
     undos.clear();
     redos.clear();

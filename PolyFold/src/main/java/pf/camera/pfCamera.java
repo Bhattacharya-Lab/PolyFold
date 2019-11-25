@@ -1,6 +1,6 @@
-/******************************* PACKAGE **************************************/
+/* ***************************** PACKAGE ************************************ */
 package pf.camera;
-/*************************** JAVAFX IMPORTS ***********************************/
+/* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -39,7 +39,7 @@ public class pfCamera extends PerspectiveCamera {
   }
 
   /* Update zoom automatically to bound 3D object */
-  // TODO needs work
+  // TODO auto zoom needs work
   public void updateZoom(Group world) {
     // cam field of view is 15 degrees from either side of center so pi / 12
     double tanTheta = Math.tan(Math.PI / 12.0);

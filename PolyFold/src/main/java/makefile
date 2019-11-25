@@ -3,7 +3,7 @@ J_FLAGS = -g
 JFX_FLAGS = --module-path $(JAVAFX_HOME) --add-modules javafx.controls,javafx.fxml,javafx.swing
 JC = javac
 J = java 
-MAIN = PolyFold
+MAIN = pf.PolyFold
 
 # clear default definitions
 .SUFFIXES: .java .class
@@ -14,7 +14,7 @@ MAIN = PolyFold
 
 # set classes to track
 CLASSES = \
-	PolyFold.java \
+	pf/PolyFold.java \
 	pf/camera/pfCamera.java \
 	pf/controllers/AuxController.java \
 	pf/controllers/Controller.java \
@@ -49,4 +49,4 @@ run: classes
 	$(J) $(JFX_FLAGS) $(MAIN)
 
 clean: 
-	$(RM) *.class pf/*/*.class
+	$(RM) pf/*.class pf/*/*.class

@@ -1,11 +1,13 @@
-/**************************** JAVA IMPORTS ************************************/
+/* ***************************** PACKAGE ************************************ */
+package pf;
+/* ************************** JAVA IMPORTS ********************************** */
 import java.io.IOException;
-/*************************** JAVAFX IMPORTS ***********************************/
+/* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.stage.Stage;
-/***************************** PF IMPORTS *************************************/
+/* *************************** PF IMPORTS *********************************** */
 import pf.controllers.Controller;
 
 public class PolyFold extends Application {
@@ -19,7 +21,7 @@ public class PolyFold extends Application {
     // Build main window
     Parent root = loader.load();
     Scene scene = new Scene(root, 1024, 768, true);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     stage.setTitle("PolyFold (Beta Version)");
     stage.setScene(scene);
     stage.show();

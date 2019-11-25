@@ -39,7 +39,7 @@ public class Shortcuts {
   /* Handle the various key codes which would load a state; modifiers are
    * handled in the main controller; loadedState is null on failure
    */
-  public void handleLoad(KeyEvent e, Angular[] angles) {
+  public void handleLoad(KeyEvent e) {
     loadedFrom = -1;
     loadedState = null;
     if (e.getCode().equals(KeyCode.DIGIT0)) loadedFrom = 0;

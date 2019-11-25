@@ -1,14 +1,13 @@
-/******************************* PACKAGE **************************************/
+/* ***************************** PACKAGE ************************************ */
 package pf.controllers;
-/**************************** JAVA IMPORTS ************************************/
+/* ************************** JAVA IMPORTS ********************************** */
 import java.io.*;
 import static java.lang.Math.*;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
-/*************************** JAVAFX IMPORTS ***********************************/
+/* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.*;
@@ -24,19 +23,25 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.*;
 import javafx.stage.FileChooser.*;
 import javafx.util.Duration;
-/***************************** PF IMPORTS *************************************/
-import pf.camera.*;
+/* *************************** PF IMPORTS *********************************** */
+import pf.camera.pfCamera;
 import pf.coreutils.*;
-import pf.geometry.*;
-import pf.optimizations.*;
-import pf.representations.*;
-import pf.ui.*;
+import pf.geometry.Chirality;
+import pf.geometry.LinearAlgebra;
+import pf.optimizations.GradientDescent;
+import pf.optimizations.MonteCarlo;
+import pf.representations.Angular;
+import pf.representations.Cartesian;
+import pf.representations.Converter;
+import pf.representations.Residue;
+import pf.ui.Colors;
+import pf.ui.ViewPort;
 
 /* Primary Controller class for making PolyFold interactive */
 public class Controller {
   // Fields relevant only to controller
   public AuxController aux = new AuxController(this);
-  Stage stage;
+  public Stage stage;
   /* Constructor */
   public Controller(Stage s) { this.stage = s; }
 
@@ -406,12 +411,8 @@ public class Controller {
       }
     });
     // Add undo states as soon as mouse goes down
-    thetaSlider.setOnMousePressed(e -> {
-      History.addUndoState(angles);
-    });
-    taoSlider.setOnMousePressed(e -> {
-      History.addUndoState(angles);
-    });
+    thetaSlider.setOnMousePressed(e -> History.addUndoState(angles));
+    taoSlider.setOnMousePressed(e -> History.addUndoState(angles));
   }
 
   /* Open a residue to residue file and set amino sequence and secondary
@@ -428,7 +429,7 @@ public class Controller {
         History.clear();
         stage.setTitle("PolyFold (Beta Version) - " + FileUtils.getBaseName(f));
         showProteinMovementUI();
-      };
+      }
     }
   }
 
@@ -464,17 +465,17 @@ public class Controller {
     currentSequenceMaxDist = max(DISTANCE_THRESHOLD, currentSequenceMaxDist);
     buildDistanceMap();
     updateScore();
-  };;
+  }
 
 
-  Rectangle[][] rects;
+  Rectangle[][] rectangles;
   @FXML HBox distanceBox;
-  ImageView colorBar = null;
-  NumberAxis ticks = null;
-  LineChart<Number, Number> chart = null;
+  ImageView colorBar;
+  NumberAxis ticks;
+  LineChart<Number, Number> chart;
 
   public void buildDistanceMap() {
-    rects = new Rectangle[RRUtils.sequenceLen][RRUtils.sequenceLen];
+    rectangles = new Rectangle[RRUtils.sequenceLen][RRUtils.sequenceLen];
     for (int i = 0; i < RRUtils.sequenceLen; i++) {
       for (int j = 0; j < RRUtils.sequenceLen; j++) {
         Rectangle rect = new Rectangle(cellSize, cellSize);
@@ -490,7 +491,7 @@ public class Controller {
           }
         }
         distanceMap.add(rect, j, i);
-        rects[i][j] = rect;
+        rectangles[i][j] = rect;
       }
     }
     Scoring.setMaxScore();
@@ -503,7 +504,7 @@ public class Controller {
     ticks = new NumberAxis(0, 25 * ((int) currentSequenceMaxDist / 25 + 1), 25);
     ticks.setSide(Side.RIGHT);
     NumberAxis xAxis = new NumberAxis(0, 0, 1);
-    chart = new LineChart<Number, Number>(xAxis, ticks);
+    chart = new LineChart<>(xAxis, ticks);
     distanceBox.getChildren().add(ticks);
   }
 
@@ -535,9 +536,9 @@ public class Controller {
         // only run on bottom triangle
         double value = adjMatrix[i][j];
         if (value > currentSequenceMaxDist) {
-          rects[i][j].setFill(Colors.INVALID);
+          rectangles[i][j].setFill(Colors.INVALID);
         } else {
-          rects[i][j].setFill(Colors.getColorFromValue(value));
+          rectangles[i][j].setFill(Colors.getColorFromValue(value));
         }
       }
     }
@@ -590,7 +591,6 @@ public class Controller {
     });
     thread.setDaemon(true);
     thread.start();
-    thread = null;
   }
 
   public void gradientDescent() {
@@ -599,12 +599,8 @@ public class Controller {
       carts = GradientDescent.getNextState(residues);
       if (i % UPDATE_RATE == 0) {
         try {
-          Platform.runLater(() -> {
-            updateStructure(Converter.cartsToAngles(carts));
-          });
-        } catch (Exception exc) {
-          exc.printStackTrace();
-        }
+          Platform.runLater(() -> updateStructure(Converter.cartsToAngles(carts)));
+        } catch (Exception exc) { exc.printStackTrace(); }
       }
     }
     try {
@@ -612,9 +608,7 @@ public class Controller {
         updateStructure(angles);
         showOptimizationComplete();
       });
-    } catch (Exception exc) {
-      exc.printStackTrace();
-    }
+    } catch (Exception exc) { exc.printStackTrace(); }
   }
 
   public void updateStructure(Angular[] update) {
@@ -651,7 +645,6 @@ public class Controller {
     });
     thread.setDaemon(true);
     thread.start();
-    thread = null;
   }
 
   public void monteCarlo() {
@@ -664,9 +657,7 @@ public class Controller {
       if (i % UPDATE_RATE == 0) {
         try {
           Platform.runLater(() -> updateStructure(angles));
-        } catch (Exception exc) {
-          exc.printStackTrace();
-        }
+        } catch (Exception exc) { exc.printStackTrace(); }
       }
       i++;
     }
@@ -679,9 +670,7 @@ public class Controller {
           showOptimizationComplete();
         }
       });
-    } catch (Exception exc) {
-      exc.printStackTrace();
-    }
+    } catch (Exception exc) { exc.printStackTrace(); }
   }
 
   /* Undo a move */
@@ -700,14 +689,14 @@ public class Controller {
     updateStructure(next.state, /*updateZoom=*/true);
   }
 
-  // Non-crtitical UI controls
+  // Non-critical UI controls
   @FXML Button gradDescentBtn, idealizeBtn, infoBtn, monteCarloBtn, redoBtn,
                undoBtn;
   @FXML MenuBar menubar;
   @FXML ToggleButton autoZoomBtn;
   /* Disable all non-critical elements of UI to prevent users from running
    * conflicting UI elements simultaneously (i.e. configuring gradient descent
-   * while gradient descent is occuring)
+   * while gradient descent is occurring)
    */
   public void disableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
@@ -770,7 +759,7 @@ public class Controller {
           sc.handleSave(e, angles);
           if (sc.savedTo != -1) showOverlay("Saved to State " + sc.savedTo);
         } else {
-          sc.handleLoad(e, angles);
+          sc.handleLoad(e);
           if (sc.loadedState != null) {
             updateStructure(sc.loadedState.state, /*updateZoom=*/true);
             showOverlay("Loaded State " + sc.loadedFrom);

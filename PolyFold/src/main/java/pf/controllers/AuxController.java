@@ -1,22 +1,21 @@
-/******************************* PACKAGE **************************************/
+/* ***************************** PACKAGE ************************************ */
 package pf.controllers;
-/**************************** JAVA IMPORTS ************************************/
+/* ************************** JAVA IMPORTS ********************************** */
 import java.awt.Desktop;
 import java.io.*;
 import java.net.URI;
-/*************************** JAVAFX IMPORTS ***********************************/
-import javafx.collections.*;
+/* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
 import javafx.stage.*;
-/***************************** PF IMPORTS *************************************/
-import pf.coreutils.*;
-import pf.optimizations.*;
-import pf.representations.*;
+/* *************************** PF IMPORTS *********************************** */
+import pf.coreutils.History;
+import pf.coreutils.State;
+import pf.optimizations.GradientDescent;
+import pf.optimizations.MonteCarlo;
+import pf.representations.Angular;
 
 /* Auxiliary Controller to load component FXML files in PolyFold */
 public class AuxController {
@@ -37,18 +36,20 @@ public class AuxController {
 
   /* Return Parent node of FXML file */
   public Parent loadFXML(String fxmlPath) {
+    Parent root = null;
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(getClass().getResource(fxmlPath));
       loader.setController(this);
-      return loader.load();
+      root = loader.load();
     } catch (IOException exc) { exc.printStackTrace(); }
-    return null;
+    assert root != null;
+    return root;
   }
 
   // Fields for About window life cycle
-  @FXML Button cancelBtn, licenseBtn, logoBtn, websiteBtn;
-  Stage aboutStage;
+  @FXML private Button cancelBtn, licenseBtn, logoBtn, websiteBtn;
+  private Stage aboutStage;
   /* Create and/or show About window for license and copyright info */
   public void showAbout() {
     // Do not allow multiple instances
@@ -59,7 +60,7 @@ public class AuxController {
     Parent root = loadFXML("/fxml/about.fxml");
     aboutStage = new Stage();
     Scene scene = new Scene(root, 512, 256);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     aboutStage.setTitle("About");
     aboutStage.setScene(scene);
     aboutStage.setResizable(false);
@@ -82,13 +83,13 @@ public class AuxController {
       File f = fileModal.showSaveDialog(scene.getWindow());
       if (f == null) return;
       // Write license to file
-      InputStream istream = getClass().getResourceAsStream("/docs/LICENSE");
-      byte[] buff = new byte[istream.available()];
-      istream.read(buff);
-      istream.close();
-      OutputStream ostream = new FileOutputStream(f);
-      ostream.write(buff);
-      ostream.close();
+      InputStream iStream = getClass().getResourceAsStream("/docs/LICENSE");
+      byte[] buff = new byte[iStream.available()];
+      iStream.read(buff);
+      iStream.close();
+      OutputStream oStream = new FileOutputStream(f);
+      oStream.write(buff);
+      oStream.close();
     } catch (IOException exc) { exc.printStackTrace(); }
   }
 
@@ -101,8 +102,8 @@ public class AuxController {
   }
 
   // Fields for optimization completion alert life cycle
-  @FXML Button okBtn;
-  Stage optCompleteStage;
+  @FXML private Button okBtn;
+  private Stage optCompleteStage;
   /* Show alert notifying completion of optimization */
   public void showOptimizationComplete() {
     if (optCompleteStage != null) {
@@ -112,13 +113,11 @@ public class AuxController {
     Parent root = loadFXML("/fxml/optimization_complete.fxml");
     optCompleteStage = new Stage();
     Scene scene = new Scene(root, 350, 150);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     optCompleteStage.setScene(scene);
     optCompleteStage.setResizable(false);
     // Handle OK button
-    okBtn.setOnMouseReleased(e -> {
-      optCompleteStage = closeStage(optCompleteStage);
-    });
+    okBtn.setOnMouseReleased(e -> optCompleteStage = closeStage(optCompleteStage));
     // Handle enter key press
     scene.setOnKeyPressed(e -> {
       if (e.getCode().equals(KeyCode.ENTER)) {
@@ -130,9 +129,9 @@ public class AuxController {
   }
 
   // Fields for gradient descent configure life cycle
-  @FXML Button applyBtn;
-  @FXML Slider iterSlider, stepSlider;
-  Stage gdConfigStage;
+  @FXML private Button applyBtn;
+  @FXML private Slider iterSlider, stepSlider;
+  private Stage gdConfigStage;
   /* Configure parameters of a gradient descent optimization */
   public void showConfigureGradientDescent() {
     // Do not allow multiple instances
@@ -142,34 +141,32 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/configure_gd.fxml");
     // Setup sliders
-    final int MULT = 1000;
-    iterSlider.setMin(GradientDescent.MIN_ITERS / MULT);
-    iterSlider.setMax(GradientDescent.MAX_ITERS / MULT);
-    iterSlider.setValue(GradientDescent.iterations / MULT);
-    stepSlider.setMin(GradientDescent.MIN_STEP * MULT);
-    stepSlider.setMax(GradientDescent.MAX_STEP * MULT);
-    stepSlider.setValue(GradientDescent.stepSize * MULT);
+    final int MULTIPLIER = 1000;
+    iterSlider.setMin((double) GradientDescent.MIN_ITERS / MULTIPLIER);
+    iterSlider.setMax((double) GradientDescent.MAX_ITERS / MULTIPLIER);
+    iterSlider.setValue((double) GradientDescent.iterations / MULTIPLIER);
+    stepSlider.setMin(GradientDescent.MIN_STEP * MULTIPLIER);
+    stepSlider.setMax(GradientDescent.MAX_STEP * MULTIPLIER);
+    stepSlider.setValue(GradientDescent.stepSize * MULTIPLIER);
     // Build scene
     gdConfigStage = new Stage();
     gdConfigStage.setTitle("Gradient Descent");
     Scene scene = new Scene(root, 450, 310);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     gdConfigStage.setScene(scene);
     gdConfigStage.setResizable(false);
     // Handle buttons
     applyBtn.setOnMouseReleased(e -> {
-      GradientDescent.setIterations(iterSlider.getValue() * MULT);
-      GradientDescent.setStepSize(stepSlider.getValue() / MULT);
+      GradientDescent.setIterations(iterSlider.getValue() * MULTIPLIER);
+      GradientDescent.setStepSize(stepSlider.getValue() / MULTIPLIER);
       gdConfigStage = closeStage(gdConfigStage);
     });
-    cancelBtn.setOnMouseReleased(e -> {
-      gdConfigStage = closeStage(gdConfigStage);
-    });
+    cancelBtn.setOnMouseReleased(e -> gdConfigStage = closeStage(gdConfigStage));
     // Handle enter key press
     scene.setOnKeyPressed(e -> {
       if (e.getCode().equals(KeyCode.ENTER)) {
-        GradientDescent.setIterations(iterSlider.getValue() * MULT);
-        GradientDescent.setStepSize(stepSlider.getValue() / MULT);
+        GradientDescent.setIterations(iterSlider.getValue() * MULTIPLIER);
+        GradientDescent.setStepSize(stepSlider.getValue() / MULTIPLIER);
         gdConfigStage = closeStage(gdConfigStage);
       }
     });
@@ -178,9 +175,9 @@ public class AuxController {
   }
 
   // Fields for monte carlo configure life cycle
-  @FXML Slider decaySlider, startTempSlider, termTempSlider;
-  @FXML TextField seed;
-  Stage mcConfigStage;
+  @FXML private Slider decaySlider, startTempSlider, termTempSlider;
+  @FXML private TextField seed;
+  private Stage mcConfigStage;
   /* Configure parameters of a monte carlo optimization */
   public void showConfigureMonteCarlo() {
     // Do not allow multiple instances
@@ -203,7 +200,7 @@ public class AuxController {
     mcConfigStage = new Stage();
     mcConfigStage.setTitle("Monte Carlo");
     Scene scene = new Scene(root, 450, 454);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     mcConfigStage.setScene(scene);
     mcConfigStage.setResizable(false);
     // Handle buttons
@@ -216,16 +213,14 @@ public class AuxController {
         try {
           long seedValue = Long.parseLong(seedText);
           MonteCarlo.setSeed(seedValue);
-          controller.showOverlay("Seed Set: " + Long.toString(seedValue));
+          controller.showOverlay("Seed Set: " + seedText);
         } catch (Exception exc) {
           controller.showOverlay("Invalid Seed: \"" + seedText + "\"");
         }
       }
       mcConfigStage = closeStage(mcConfigStage);
     });
-    cancelBtn.setOnMouseReleased(e -> {
-      mcConfigStage = closeStage(mcConfigStage);
-    });
+    cancelBtn.setOnMouseReleased(e -> mcConfigStage = closeStage(mcConfigStage));
     // Handle enter key press
     scene.setOnKeyPressed(e -> {
       if (e.getCode().equals(KeyCode.ENTER)) {
@@ -237,7 +232,7 @@ public class AuxController {
           try {
             long seedValue = Long.parseLong(seedText);
             MonteCarlo.setSeed(seedValue);
-            controller.showOverlay("Seed Set: " + Long.toString(seedValue));
+            controller.showOverlay("Seed Set: " + seedText);
           } catch (Exception exc) {
             controller.showOverlay("Invalid Seed: \"" + seedText + "\"");
           }
@@ -249,7 +244,7 @@ public class AuxController {
     mcConfigStage.setOnCloseRequest(e -> mcConfigStage = null);
   }
 
-  Stage recoverLowestStage;
+  private Stage recoverLowestStage;
   public void showRecoverLowest() {
     if (recoverLowestStage != null) {
       recoverLowestStage.requestFocus();
@@ -259,7 +254,7 @@ public class AuxController {
     recoverLowestStage = new Stage();
     recoverLowestStage.setTitle("Monte Carlo");
     Scene scene = new Scene(root, 450, 152);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     recoverLowestStage.setScene(scene);
     recoverLowestStage.setResizable(false);
     // Handle buttons
@@ -269,9 +264,7 @@ public class AuxController {
       recoverLowestStage = closeStage(recoverLowestStage);
     });
     // Handle cancel
-    cancelBtn.setOnMouseReleased(e -> {
-      recoverLowestStage = closeStage(recoverLowestStage);
-    });
+    cancelBtn.setOnMouseReleased(e -> recoverLowestStage = closeStage(recoverLowestStage));
     // Handle keys
     scene.setOnKeyPressed(e -> {
       if (e.getCode().equals(KeyCode.ENTER)) {
@@ -288,8 +281,8 @@ public class AuxController {
   }
 
   // Fields for save state life cycle
-  @FXML TextField stateName;
-  Stage saveStateStage;
+  @FXML private TextField stateName;
+  private Stage saveStateStage;
   /* Method which creates named state in history */
   public void handleSaveState(Angular[] angles) {
     if (saveStateStage != null) {
@@ -298,7 +291,7 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/save_state.fxml");
     Scene scene = new Scene(root, 300, 192);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     saveStateStage = new Stage();
     saveStateStage.setScene(scene);
     saveStateStage.setResizable(false);
@@ -309,9 +302,7 @@ public class AuxController {
       saveStateStage = closeStage(saveStateStage);
     });
     // Handle cancel
-    cancelBtn.setOnMouseReleased(e -> {
-      saveStateStage = closeStage(saveStateStage);
-    });
+    cancelBtn.setOnMouseReleased(e -> saveStateStage = closeStage(saveStateStage));
     // Handel enter and escape keys
     scene.setOnKeyPressed(e -> {
       if (e.getCode().equals(KeyCode.ENTER)) {
@@ -328,8 +319,8 @@ public class AuxController {
   }
 
   // Fields for load state life cycle
-  @FXML ListView<String> stateList;
-  Stage loadStateStage;
+  @FXML private ListView<String> stateList;
+  private Stage loadStateStage;
   /* Method which loads named state from history */
   public void handleLoadState() {
     if (History.namedStates.keySet().isEmpty()) {
@@ -342,7 +333,7 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/load_state.fxml");
     Scene scene = new Scene(root, 400, 300);
-    scene.getStylesheets().add("style/style.css");
+    scene.getStylesheets().add("/style.css");
     loadStateStage = new Stage();
     loadStateStage.setScene(scene);
     loadStateStage.setResizable(false);
@@ -357,17 +348,14 @@ public class AuxController {
       loadStateStage = closeStage(loadStateStage);
     });
     // Handle cancel button
-    cancelBtn.setOnMouseReleased(e -> {
-      loadStateStage = closeStage(loadStateStage);
-    });
+    cancelBtn.setOnMouseReleased(e -> loadStateStage = closeStage(loadStateStage));
     loadStateStage.show();
     loadStateStage.setOnCloseRequest(e -> loadStateStage = null);
   }
 
   /* Utility for closing a window and setting it to null */
   public Stage closeStage(Stage s) {
-    if (s == null) return s;
-    s.hide();
+    if (s != null) s.hide();
     return null;
   }
 }
