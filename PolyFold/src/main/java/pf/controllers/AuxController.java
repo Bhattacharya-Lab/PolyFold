@@ -190,12 +190,21 @@ public class AuxController {
     decaySlider.setMin(0.0);
     decaySlider.setMax(1.0);
     decaySlider.setValue(MonteCarlo.decay);
-    startTempSlider.setMin(0.5);
+    startTempSlider.setMin(0.0);
     startTempSlider.setMax(1.0);
     startTempSlider.setValue(MonteCarlo.startTemp);
     termTempSlider.setMin(0.0);
-    termTempSlider.setMax(0.2);
+    termTempSlider.setMax(1.0);
     termTempSlider.setValue(MonteCarlo.terminalTemp);
+    // Adaptive to prevent start < end and vice versa
+    startTempSlider.valueProperty().addListener((obs, start, end) -> {
+      startTempSlider.setValue(Math.max(termTempSlider.getValue() + 0.1, end.doubleValue()));
+      termTempSlider.setValue(Math.min(termTempSlider.getValue(), end.doubleValue() - 0.1));
+    });
+    termTempSlider.valueProperty().addListener((obs, start, end) -> {
+      startTempSlider.setValue(Math.max(startTempSlider.getValue(), end.doubleValue() + 0.1));
+      termTempSlider.setValue(Math.min(startTempSlider.getValue() - 0.1, end.doubleValue()));
+    });
     // Build scene
     mcConfigStage = new Stage();
     mcConfigStage.setTitle("Monte Carlo");
