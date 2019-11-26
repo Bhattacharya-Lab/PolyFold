@@ -109,7 +109,8 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public final int UPDATE_RATE = 256;
+  public final int GD_UPDATE_RATE = 128;
+  public final int MC_UPDATE_RATE = 16;
   // Residue representation related fields;
   public static Residue[] residues;
   public static Angular[] angles;
@@ -207,19 +208,8 @@ public class Controller {
     int n = RRUtils.sequenceLen;
     residues = new Residue[n];
     for (int i = 0; i < n; i++) {
-      Cartesian c = carts[i];
-      // Residue constructor sets rod length to 0 if isEndNode
-      Residue r = new Residue(c.ca.x, c.ca.y, c.ca.z, (i == n-1));
-      r.id = i;
-      r.aa = RRUtils.aminoSequence.charAt(i);
-      r.node.setMaterial(Colors.RED);
-      if (RRUtils.secondarySequence != null) {
-        r.ss = RRUtils.secondarySequence.charAt(i);
-        if (r.ss == 'H') r.node.setMaterial(Colors.RED);
-        if (r.ss == 'E') r.node.setMaterial(Colors.YELLOW);
-        if (r.ss == 'C') r.node.setMaterial(Colors.BLUE);
-      }
-      residues[i] = r;
+      residues[i] = new Residue(carts[i], (i == n-1));
+      residues[i].id = i;
       if (i > 0) residues[i-1].rotateRod(residues[i]);
     }
   }
@@ -596,12 +586,12 @@ public class Controller {
   public void gradientDescent() {
     for (int i = 0; i <= GradientDescent.iterations; i++) {
       if (killOptimization) return;
-      carts = GradientDescent.getNextState(residues);
-      if (i % UPDATE_RATE == 0) {
-        try {
+      try {
+        carts = GradientDescent.getNextState(residues);
+        if (i % GD_UPDATE_RATE == 0) {
           Platform.runLater(() -> updateStructure(Converter.cartsToAngles(carts)));
-        } catch (Exception exc) { exc.printStackTrace(); }
-      }
+        }
+      } catch (Exception exc) {}
     }
     try {
       Platform.runLater(() -> {
@@ -654,10 +644,10 @@ public class Controller {
       if (killOptimization) return;
       MonteCarlo.setTemperature(i);
       angles = MonteCarlo.getNextState(angles);
-      if (i % UPDATE_RATE == 0) {
+      if (i % MC_UPDATE_RATE == 0) {
         try {
           Platform.runLater(() -> updateStructure(angles));
-        } catch (Exception exc) { exc.printStackTrace(); }
+        } catch (Exception exc) {}
       }
       i++;
     }
