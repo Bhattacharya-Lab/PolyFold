@@ -11,13 +11,12 @@ public class MonteCarlo {
   // Random number generator with random seed
   public static Random random = new Random();
   // Used only in calculations of other parameters
-  public static final int MAX_ITERS = 50_000;
   public static double startTemp = 1.0;
   public static double terminalTemp = 0.01;
   public static double temperature = 1.0;
   // These values result in roughly MAX_ITERS iterations
   public static double decay = 0.9;
-  public static int itersPerDecayLevel = 1144;
+  public static int itersPerDecayLevel = 200;
   // Lowest energy state
   public static Angular[] lowest;
   public static double energy;
@@ -37,21 +36,18 @@ public class MonteCarlo {
 
   /* Set terminal temperature */
   public static void setTerminalTemp(double temp) {
-    if (temp <= 0) temp = 0.001;
+    if (temp <= 0) temp = 0.01;
     terminalTemp = temp;
   }
 
   /* Utility to test completion condition */
-  public static boolean complete() { return temperature <= terminalTemp; }
+  public static boolean complete() { return temperature < terminalTemp; }
 
   /* Set decay rate and number of iters to stay in each power of that rate */
   public static void setDecay(double d) {
     if (d >= 1.0) d = 0.99;
     if (d <= 0.0) d = 0.01;
-    int itersToComplete =
-        (int) ((Math.log(terminalTemp) - Math.log(startTemp)) / Math.log(d));
     decay = d;
-    itersPerDecayLevel = Math.max(1, MAX_ITERS / itersToComplete);
   }
 
   /* Return the temperature of a given iteration with a given initial
@@ -65,8 +61,7 @@ public class MonteCarlo {
    * temperature
    */
   public static boolean acceptProbability(double energyPrime, double energy) {
-    double probability = Math.exp((energy - energyPrime) / temperature);
-    return random.nextDouble() < probability;
+    return random.nextDouble() < Math.exp((energy - energyPrime) / temperature);
   }
 
   /* Get next state of angles array after applying random to walk to k-Mer */
