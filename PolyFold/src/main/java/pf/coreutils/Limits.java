@@ -28,7 +28,7 @@ public class Limits {
 
   public static double minDihedral(char ss) {
     if (ss == 'H') return toRadians(30);
-    if (ss == 'E') return toRadians(-215);
+    if (ss == 'E') return toRadians(145);
     return -PI + EPS;
   }
 
@@ -46,9 +46,9 @@ public class Limits {
   }
 
   public static double angleEditRange(char ss) {
-    if (ss == 'E') return toRadians(4);
-    if (ss == 'H') return toRadians(6);
-    return toRadians(10);
+    if (ss == 'E') return toRadians(8);
+    if (ss == 'H') return toRadians(12);
+    return toRadians(20);
   }
 
   public static double clipPlanar(double planarAngle, char ss) {
@@ -62,7 +62,7 @@ public class Limits {
     double maxAngle = minAngle + dihedralRange(ss);
     dihedralAngle = max(minAngle, min(dihedralAngle, maxAngle));
     // COmpensate for wrap around
-    if (dihedralAngle < -PI) dihedralAngle += 2 * PI;
+    if (dihedralAngle > PI) dihedralAngle -= 2 * PI;
     return dihedralAngle;
   }
 }
