@@ -187,7 +187,7 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/configure_mc.fxml");
     // Setup sliders
-    decaySlider.setMin(0.0);
+    decaySlider.setMin(0.1);
     decaySlider.setMax(1.0);
     decaySlider.setValue(MonteCarlo.decay);
     startTempSlider.setMin(0.0);
