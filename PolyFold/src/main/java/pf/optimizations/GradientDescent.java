@@ -7,14 +7,15 @@ import pf.representations.*;
 public class GradientDescent {
   public static Cartesian[] carts;
   public static double stepSize = 0.004;
-  public static int iterations = 100000;
+  public static int iterations = 80000;
   public static final int MIN_ITERS = 50000;
   public static final int MAX_ITERS = 550000;
   public static final double MIN_STEP = 0;
   public static final double MAX_STEP = 0.05;
 
-  public static Cartesian[] getNextState(Residue[] residues) {
-    carts = Converter.residuesToCarts(residues);
+  public static Cartesian[] getNextState(Cartesian[] state) {
+    carts = new Cartesian[state.length];
+    for (int i = 0; i < state.length; i++) carts[i] = new Cartesian(state[i]);
     for (int i = 0; i < carts.length; i++) {
       double[] gradient = {0, 0, 0};
       for (int j = i+1; j < carts.length; j++) {
@@ -84,5 +85,9 @@ public class GradientDescent {
   }
 
   public static void setIterations(double i) { iterations = (int) i; }
-  public static void setStepSize(double alpha) { stepSize = alpha; }
+
+  public static void setStepSize(double alpha) {
+    if (alpha <= 0) alpha = 0.0001;
+    stepSize = alpha;
+  }
 }
