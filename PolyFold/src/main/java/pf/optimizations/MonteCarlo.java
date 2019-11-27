@@ -11,21 +11,23 @@ public class MonteCarlo {
   // Random number generator with random seed
   public static Random random = new Random();
   // Used only in calculations of other parameters
+  public static final int MAX_ITERS = 8000;
   public static double startTemp = 1.0;
   public static double terminalTemp = 0.01;
   public static double temperature = 1.0;
   // These values result in roughly MAX_ITERS iterations
   public static double decay = 0.9;
-  public static int itersPerDecayLevel = 200;
+  public static int itersPerDecayLevel = 180;
   // Lowest energy state
   public static Angular[] lowest;
-  public static double energy;
+  public static double lowestEnergy;
+  public static double currentEnergy;
 
   /* Set necessary pre-conditions for Monte Carlo */
   public static void setup() {
     temperature = startTemp;
     lowest = null;
-    energy = Limits.INF;
+    lowestEnergy = Limits.INF;
   }
 
   /* Set the random seed */
@@ -46,8 +48,11 @@ public class MonteCarlo {
   /* Set decay rate and number of iters to stay in each power of that rate */
   public static void setDecay(double d) {
     if (d >= 1.0) d = 0.99;
-    if (d <= 0.0) d = 0.01;
+    if (d < 0.1) d = 0.1;
     decay = d;
+    int itersToCompletion =
+        (int) ((Math.log(terminalTemp) - Math.log(startTemp)) / Math.log(decay));
+    itersPerDecayLevel = Math.max(1, MAX_ITERS / Math.max(1, itersToCompletion));
   }
 
   /* Return the temperature of a given iteration with a given initial
@@ -85,20 +90,27 @@ public class MonteCarlo {
 
   /* Take one random walk step of MC optimization */
   public static Angular[] getNextState(Angular[] currState) {
+    Residue[] residues = Converter.anglesToResidues(currState);
+    double[][] adj = LinearAlgebra.adjacencyMatrix(residues);
+    double energy = scoreToEnergy(Scoring.calculateScore(adj));
     if (lowest == null) {
       lowest = currState;
-      energy = scoreToEnergy(Scoring.score);
+      lowestEnergy = energy;
+      currentEnergy = energy;
     }
+    System.out.println(currentEnergy);
     Angular[] nextState = getRandomNeighbor(currState);
-    Residue[] residues = Converter.anglesToResidues(nextState);
-    double[][] adj = LinearAlgebra.adjacencyMatrix(residues);
+    residues = Converter.anglesToResidues(nextState);
+    adj = LinearAlgebra.adjacencyMatrix(residues);
     double energyPrime = scoreToEnergy(Scoring.calculateScore(adj));
-    if (energyPrime < energy) {
-      lowest = nextState;
-      energy = energyPrime;
+    if (energyPrime < energy || acceptProbability(energyPrime, energy)) {
+      if (energyPrime < lowestEnergy) {
+        lowest = nextState;
+        lowestEnergy = energyPrime;
+      }
+      currentEnergy = energyPrime;
       return nextState;
     }
-    if (acceptProbability(energyPrime, energy)) return nextState;
     return currState;
   }
 
