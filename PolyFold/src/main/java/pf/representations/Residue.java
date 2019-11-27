@@ -6,6 +6,7 @@ import javafx.scene.transform.*;
 import javafx.geometry.Point3D;
 
 import static pf.geometry.LinearAlgebra.*;
+import pf.ui.Colors;
 
 public class Residue extends Group {
   public final double NODE_RADIUS = 0.55;
@@ -19,21 +20,14 @@ public class Residue extends Group {
   public int id;
   public Rotate rotation;
 
-  public Residue(double x, double y, double z, boolean end) {
-    super();
-    this.node = new Sphere(NODE_RADIUS);
-    if (!end) initRod(ROD_RADIUS, ROD_HEIGHT);
-    initRotation(Rotate.Z_AXIS);
-    getChildren().addAll(node, rod);
-    getTransforms().add(rotation);
-    setCenter(x, y, z);
-  }
-
   public Residue(Cartesian cart, boolean end) {
     super();
     this.node = new Sphere(NODE_RADIUS);
     this.aa = cart.aa;
     this.ss = cart.ss;
+    this.node.setMaterial(Colors.RED);
+    if (this.ss == 'E') this.node.setMaterial(Colors.YELLOW);
+    if (this.ss == 'C') this.node.setMaterial(Colors.BLUE);
     if (!end) initRod(ROD_RADIUS, ROD_HEIGHT);
     initRotation(Rotate.Z_AXIS);
     getChildren().addAll(node, rod);
@@ -61,6 +55,15 @@ public class Residue extends Group {
     setTranslateX(xF - x0);
     setTranslateY(yF - y0);
     setTranslateZ(zF - z0);
+  }
+
+  public void setCenter(Point p) {
+    double x0 = node.getTranslateX();
+    double y0 = node.getTranslateY();
+    double z0 = node.getTranslateZ();
+    setTranslateX(p.x - x0);
+    setTranslateX(p.y - y0);
+    setTranslateX(p.z - z0);
   }
 
   public Point getCenter() {
