@@ -73,21 +73,26 @@ public class Converter {
     return carts;
   }
 
-  public static Residue[] anglesToResidues(Angular[] angles) {
-    Cartesian[] carts = anglesToCarts(angles);
+  public static Angular[] residuesToAngles(Residue[] residues) {
+    return cartsToAngles(residuesToCarts(residues));
+  }
+
+  public static Residue[] cartsToResidues(Cartesian[] carts) {
     Residue[] residues = new Residue[carts.length];
     for (int i = 0; i < carts.length; i++) {
-      Residue r = new Residue(carts[i], (i == carts.length-1));
-      r.id = i;
-      residues[i] = r;
+      residues[i] = new Residue(carts[i], (i == carts.length-1));
+      residues[i].id = i;
       if (i > 0) residues[i-1].rotateRod(residues[i]);
     }
     return residues;
   }
 
+  public static Residue[] anglesToResidues(Angular[] angles) {
+    return cartsToResidues(anglesToCarts(angles));
+  }
+
   public static Point setCoordinate(Point a, Point b, Point c, Point d,
                                     double theta, double tao) {
-    double nsa, nca, nct;
     Point u = pointSubtract(b, a);
     Point v = unitVector(pointSubtract(c, b));
     Point norm = unitVector(crossProduct(u, v));
