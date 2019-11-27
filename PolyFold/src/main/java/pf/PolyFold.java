@@ -14,8 +14,7 @@ public class PolyFold extends Application {
   /* Main function for FX apps */
   @Override
   public void start(Stage stage) throws IOException {
-    FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/fxml/main.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
     Controller controller = new Controller(stage);
     loader.setController(controller);
     // Build main window
