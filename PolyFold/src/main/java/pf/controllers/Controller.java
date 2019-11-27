@@ -109,8 +109,8 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public final int GD_UPDATE_RATE = 128;
-  public final int MC_UPDATE_RATE = 16;
+  public final int GD_UPDATE_RATE = 256;
+  public final int MC_UPDATE_RATE = 8;
   // Residue representation related fields;
   public static Residue[] residues;
   public static Angular[] angles;
@@ -185,7 +185,7 @@ public class Controller {
     }
   }
 
-  public void idealizeSecondary() {
+  public void repairSecondary() {
     boolean hasSecondaryStructure = (
         RRUtils.secondarySequence != null &&
         RRUtils.secondarySequence.length() == RRUtils.aminoSequence.length());
@@ -194,9 +194,9 @@ public class Controller {
     // Considering tetra-peptides
     for (int i = 1; i < n-1; i++) {
       char ss = angles[i].ss;
-      if (ss != 'C') {
-        angles[i].theta = Limits.idealPlanar(ss);
-        if (i != n-2) angles[i].tao = Limits.idealDihedral(ss);
+      if (ss == 'H' || ss == 'E') {
+        angles[i].theta = Limits.clipPlanar(angles[i].theta, ss);
+        if (i != n-2) angles[i].tao = Limits.clipDihedral(angles[i].tao, ss);
       }
     }
     updateStructure(angles, /*updateZoom=*/true);
@@ -376,8 +376,7 @@ public class Controller {
         updateScore();
         int id = selectedResidue.id;
         if (id != 0 && id != angles.length-1) {
-          thetaDegreeText.setText(
-              df.format(toDegrees(thetaSlider.getValue())) + "\u00b0");
+          thetaDegreeText.setText(df.format(toDegrees(thetaSlider.getValue())) + "\u00b0");
           angles[id].theta = end.doubleValue();
           History.setCurrentState(angles);
           residues = updateResidues(id);
@@ -391,8 +390,7 @@ public class Controller {
         updateScore();
         int id = selectedResidue.id;
         if (id != 0 && id != angles.length-2 && id != angles.length-1) {
-          taoDegreeText.setText(
-              df.format(toDegrees(taoSlider.getValue())) + "\u00b0");
+          taoDegreeText.setText(df.format(toDegrees(taoSlider.getValue())) + "\u00b0");
           angles[id].tao = end.doubleValue();
           History.setCurrentState(angles);
           residues = updateResidues(id);
@@ -411,8 +409,7 @@ public class Controller {
   public void openFile() throws IOException {
     FileChooser fileModal = new FileChooser();
     fileModal.setTitle("Open Resource File");
-    fileModal.getExtensionFilters().addAll(
-        new ExtensionFilter("RR File \".rr\"", "*.rr"));
+    fileModal.getExtensionFilters().addAll(new ExtensionFilter("RR File \".rr\"", "*.rr"));
     File f = fileModal.showOpenDialog(app.getScene().getWindow());
     if (f != null) {
       if (RRUtils.parseRR(f)) {
@@ -505,16 +502,14 @@ public class Controller {
     updateMapColors();
     Scoring.updateScore(adjMatrix);
     progressBar.setProgress(Scoring.scorePercentage());
-    score.setText(
-        " " + Scoring.scoreNumerator() + " / " + Scoring.scoreDenominator());
+    score.setText(" " + Scoring.scoreNumerator() + " / " + Scoring.scoreDenominator());
   }
 
   public void updateDistanceMap() {
     for (int i = 0; i < RRUtils.sequenceLen; i++) {
       for (int j = 0; j < RRUtils.sequenceLen; j++) {
         if (i > j) {
-          adjMatrix[i][j] = LinearAlgebra.residueDistance(
-              residues[i], residues[j]);
+          adjMatrix[i][j] = LinearAlgebra.residueDistance(residues[i], residues[j]);
         }
       }
     }
@@ -538,9 +533,7 @@ public class Controller {
     if (residues == null) return;
     FileChooser fileModal = new FileChooser();
     fileModal.setTitle("Save As...");
-    fileModal.getExtensionFilters().add(
-      new ExtensionFilter("Protein Data Bank \".pdb\"", "*.pdb")
-    );
+    fileModal.getExtensionFilters().add(new ExtensionFilter("Protein Data Bank \".pdb\"", "*.pdb"));
     File f = fileModal.showSaveDialog(app.getScene().getWindow());
     if (f != null) writeToPDB(f);
   }
@@ -550,16 +543,14 @@ public class Controller {
     carts = Converter.anglesToCarts(angles);
     int multiplier = Chirality.hasCorrectChirality(carts) ? 1 : -1;
     for (int i = 0; i < residues.length; i++) {
-      String s = String.format(
-        "ATOM %6d  CA  %-3s %5d    %8.3f%8.3f%8.3f  1.00  0.00\n",
-        i+1,
-        Maps.aaThreeCharacter.get(residues[i].aa),
-        residues[i].id+1,
-        carts[i].ca.x,
-        carts[i].ca.y * multiplier,
-        carts[i].ca.z
-      );
-      bw.write(s);
+      bw.write(
+          String.format("ATOM %6d  CA  %-3s %5d    %8.3f%8.3f%8.3f  1.00  0.00\n",
+                        i+1,
+                        Maps.aaThreeCharacter.get(residues[i].aa),
+                        residues[i].id+1,
+                        carts[i].ca.x,
+                        carts[i].ca.y * multiplier,
+                        carts[i].ca.z));
     }
     bw.close();
   }
@@ -584,15 +575,18 @@ public class Controller {
   }
 
   public void gradientDescent() {
+    carts = Converter.residuesToCarts(residues);
     for (int i = 0; i <= GradientDescent.iterations; i++) {
       if (killOptimization) return;
-      try {
-        carts = GradientDescent.getNextState(residues);
-        if (i % GD_UPDATE_RATE == 0) {
-          Platform.runLater(() -> updateStructure(Converter.cartsToAngles(carts)));
-        }
-      } catch (Exception exc) {}
+      carts = GradientDescent.getNextState(carts);
+      if (i % GD_UPDATE_RATE == 0) {
+        angles = Converter.cartsToAngles(carts);
+        try {
+          Platform.runLater(() -> updateStructure(angles));
+        } catch (Exception exc) {}
+      }
     }
+    angles = Converter.cartsToAngles(carts);
     try {
       Platform.runLater(() -> {
         updateStructure(angles);
@@ -602,7 +596,7 @@ public class Controller {
   }
 
   public void updateStructure(Angular[] update) {
-    angles = update;
+    for (int i = 0; i < update.length; i++) angles[i] = new Angular(update[i]);
     residues = updateResidues(-1);
     buildSequence();
     updateScore();
@@ -654,7 +648,7 @@ public class Controller {
     try {
       Platform.runLater(() -> {
         updateStructure(angles);
-        if (MonteCarlo.scoreToEnergy(Scoring.score) > MonteCarlo.energy) {
+        if (MonteCarlo.currentEnergy > MonteCarlo.lowestEnergy) {
           showRecoverLowest();
         } else {
           showOptimizationComplete();
@@ -680,8 +674,7 @@ public class Controller {
   }
 
   // Non-critical UI controls
-  @FXML Button gradDescentBtn, idealizeBtn, infoBtn, monteCarloBtn, redoBtn,
-               undoBtn;
+  @FXML Button gradDescentBtn, infoBtn, monteCarloBtn, redoBtn, repairBtn, undoBtn;
   @FXML MenuBar menubar;
   @FXML ToggleButton autoZoomBtn;
   /* Disable all non-critical elements of UI to prevent users from running
@@ -690,8 +683,7 @@ public class Controller {
    */
   public void disableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
-      autoZoomBtn, gradDescentBtn, idealizeBtn, infoBtn, menubar, monteCarloBtn,
-      redoBtn, undoBtn
+      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn, repairBtn, undoBtn
     };
     for (Node n : nonCritical) n.setDisable(true);
   }
@@ -699,8 +691,7 @@ public class Controller {
   /* Enable non-critical UI elements upon completion of volatile function */
   public void enableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
-      autoZoomBtn, gradDescentBtn, idealizeBtn, infoBtn, menubar, monteCarloBtn,
-      redoBtn, undoBtn
+      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn, repairBtn, undoBtn
     };
     for (Node n : nonCritical) n.setDisable(false);
   }
