@@ -109,7 +109,7 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public final int GD_UPDATE_RATE = 256;
+  public final int GD_UPDATE_RATE = 512;
   public final int MC_UPDATE_RATE = 8;
   // Residue representation related fields;
   public static Residue[] residues;
@@ -433,7 +433,7 @@ public class Controller {
   public void generateDistanceMap() {
     distanceMap.getChildren().clear();
     currentSequenceMaxDist = 0.0;
-    cellSize = min(DISTANCE_MAP_WIDTH / RRUtils.sequenceLen, 3);
+    cellSize = min(max(DISTANCE_MAP_WIDTH / RRUtils.sequenceLen, 1), 3);
     adjMatrix = LinearAlgebra.adjacencyMatrix(residues);
     for (int i = 0; i < RRUtils.sequenceLen; i++) {
       for (int j = 0; j < RRUtils.sequenceLen; j++) {
@@ -577,12 +577,12 @@ public class Controller {
   public void gradientDescent() {
     carts = Converter.residuesToCarts(residues);
     for (int i = 0; i <= GradientDescent.iterations; i++) {
-      if (killOptimization) return;
+      if (killOptimization) break;
       carts = GradientDescent.getNextState(carts);
       if (i % GD_UPDATE_RATE == 0) {
-        angles = Converter.cartsToAngles(carts);
+        Cartesian[] tmpCarts = Converter.cartesianCopy(carts);
         try {
-          Platform.runLater(() -> updateStructure(angles));
+          Platform.runLater(() -> updateStructure(Converter.cartsToAngles(tmpCarts)));
         } catch (Exception exc) {}
       }
     }
@@ -635,12 +635,13 @@ public class Controller {
     MonteCarlo.setup();
     int i = 0;
     while (!MonteCarlo.complete()) {
-      if (killOptimization) return;
+      if (killOptimization) break;
       MonteCarlo.setTemperature(i);
       angles = MonteCarlo.getNextState(angles);
       if (i % MC_UPDATE_RATE == 0) {
+        Angular[] tmpAngles = Converter.angularCopy(angles);
         try {
-          Platform.runLater(() -> updateStructure(angles));
+          Platform.runLater(() -> updateStructure(tmpAngles));
         } catch (Exception exc) {}
       }
       i++;
