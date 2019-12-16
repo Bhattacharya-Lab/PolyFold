@@ -68,7 +68,7 @@
           </VBox>
           <VBox id="logoContainer">
             <Button fx:id="rightLogo" id="rightLogo"/>
-            <Label id="slogan">PolyFold: Protein Simulator</Label>
+            <Label id="slogan">PolyFold: Protein Folding Simulator</Label>
           </VBox>
         </VBox>
       </VBox>
