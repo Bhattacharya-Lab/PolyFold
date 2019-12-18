@@ -42,7 +42,7 @@ $ mvn clean javafx:jlink
 ```
 $ ./target/PolyFold/bin/launcher
 ```
-#### On Debian Based Linux
+#### Debian Based Linux
 1. Use your package manager to install Maven (apt shown below)
 ```
 $ sudo apt install maven
