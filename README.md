@@ -1,11 +1,11 @@
 ![polyfold](PolyFold/src/main/resources/readme/thumb.png)
 
-PolyFold is an interactive visual simulator for distance-based protein folding 
-dynamics. The goal of PolyFold is to give citizen scientists and academic 
+PolyFold is an interactive visual simulator for distance-based protein folding
+dynamics. The goal of PolyFold is to give citizen scientists and academic
 scientists alike an intuitive and visually appealing tool which elucidates the
-process of folding proteins with common machine learning optimization 
-techniques in real time. It is the hope of the PolyFold team that this tool will 
-serve to fill out the gaps in the user's intuition and understanding of the way 
+process of folding proteins with common machine learning optimization
+techniques in real time. It is the hope of the PolyFold team that this tool will
+serve to fill out the gaps in the user's intuition and understanding of the way
 certain types of proteins respond to certain types of optimization strategies.
 
 No prior scientific background is needed to work with PolyFold. It is built
@@ -13,15 +13,36 @@ entirely with human intuition in mind.
 
 ## How to Compile and Run the Source Code
 
-### Using Make
-1. Run the following line to compile the code:
+### Using Maven
+#### Mac OS
+1. If you do not have homebrew installed, you can install it with
 ```
-$ make
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-2. Run the following line to run the application:
+2. Install Maven
 ```
-$ make run
+$ brew install maven
 ```
+3. Export the correct environment variables. Add them to your profile or rc file for persistence
+```
+$ export M2_HOME=/usr/local/Cellar/maven/<version_here>
+$ export M2=$M2_HOME/bin
+$ export PATH=$M2:$PATH
+```
+4. Verify the install and correct environment variables with
+```
+$ mvn -v
+```
+5. Change into the PolyFold directory which should contain `pom.xml`
+6. Compile
+```
+$ mvn clean javafx:jlink
+```
+7. Run
+```
+$ ./target/PolyFold/bin/launcher
+```
+
 
 ### Using the JRE
 1. Run the following line to compile the code:
@@ -38,14 +59,14 @@ Upon opening PolyFold you will be greeted by a screen which looks similar to thi
 
 ![polyfold splash screen](PolyFold/src/main/resources/readme/splash.png)
 
-You will notice that there is a menu bar and a tool bar at the top of the screen. Let's go through each item of the menu bar. 
+You will notice that there is a menu bar and a tool bar at the top of the screen. Let's go through each item of the menu bar.
 
 ### Menu Bar
 
 #### File Menu
 ![file menu](PolyFold/src/main/resources/readme/file.png)
 
-The file menu contains options for opening ".rr" files and saving the current state of a folded protein in PolyFold as a ".pdb" file. 
+The file menu contains options for opening ".rr" files and saving the current state of a folded protein in PolyFold as a ".pdb" file.
 
 #### Edit Menu
 ![edit menu](PolyFold/src/main/resources/readme/edit.png)
@@ -74,12 +95,12 @@ Now let's explore the tool bar.
 ![auto zoom button](PolyFold/src/main/resources/readme/autozoom.png)
 #### AutoZoom Button
 
-The AutoZoom button attempts to move the PolyFold camera such that the majority of the protein structure is rendered in the current frame. It can also be activated by pressing the "A" key. 
+The AutoZoom button attempts to move the PolyFold camera such that the majority of the protein structure is rendered in the current frame. It can also be activated by pressing the "A" key.
 
 ![repair button](PolyFold/src/main/resources/readme/hammer.png)
 #### Repair Button
 
-The Repair button adjusts all of the planar and dihedral angles for each alpha helix and beta strand residue in the current protein such that they fall within acceptable ranges for those secondary structures. 
+The Repair button adjusts all of the planar and dihedral angles for each alpha helix and beta strand residue in the current protein such that they fall within acceptable ranges for those secondary structures.
 
 ![gradient descent button](PolyFold/src/main/resources/readme/gd.png)
 #### Gradient Descent Button
@@ -89,7 +110,7 @@ The Gradient Descent button will start a gradient descent optimization on the cu
 ![monte carlo button](PolyFold/src/main/resources/readme/mc.png)
 #### Monte Carlo Button
 
-The Monte Carlo button will start a Monte Carlo optimization on the current protein structure. 
+The Monte Carlo button will start a Monte Carlo optimization on the current protein structure.
 
 ![undo button](PolyFold/src/main/resources/readme/undo.png)
 #### Undo Button
