@@ -42,17 +42,31 @@ $ mvn clean javafx:jlink
 ```
 $ ./target/PolyFold/bin/launcher
 ```
+#### On Debian Based Linux
+1. Use your package manager to install Maven (apt shown below)
+```
+$ sudo apt install maven
+```
+2. Export the correct environment variables. Add them to your profile or rc file for persistence
+```
+$ export M2_HOME=/usr/local/Cellar/maven/<version_here>
+$ export M2=$M2_HOME/bin
+$ export PATH=$M2:$PATH
+```
+3. Verify the install and correct environment variables with
+```
+$ mvn -v
+```
+4. Change into the PolyFold directory which should contain `pom.xml`
+5. Compile
+```
+$ mvn clean javafx:jlink
+```
+6. Run
+```
+$ ./target/PolyFold/bin/launcher
+```
 
-
-### Using the JRE
-1. Run the following line to compile the code:
-```
-$ javac PolyFold.java
-```
-2. Run the following line to run the application:
-```
-$ java PolyFold
-```
 ## Manual
 
 Upon opening PolyFold you will be greeted by a screen which looks similar to this:
