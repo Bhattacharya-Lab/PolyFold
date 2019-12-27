@@ -13,6 +13,8 @@ entirely with human intuition in mind.
 
 ## How to Compile and Run the Source Code
 
+It is extremely important that you ensure you are using the correct version of Java in order for PolyFold to function properly. PolyFold is built for long term stability and runs on Java 11. The Java 11 JDK and JRE can be downloaded at https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+
 ### Using Make
 1. Run the following line to compile the code:
 ```
