@@ -98,7 +98,6 @@ public class MonteCarlo {
       lowestEnergy = energy;
       currentEnergy = energy;
     }
-    System.out.println(currentEnergy);
     Angular[] nextState = getRandomNeighbor(currState);
     residues = Converter.anglesToResidues(nextState);
     adj = LinearAlgebra.adjacencyMatrix(residues);
