@@ -85,6 +85,8 @@
                       onAction="#openFile" text="Open..."/>
             <MenuItem fx:id="saveMenu" accelerator="Shortcut+s"
                       onAction="#saveToPDB" text="Save As..."/>
+            <MenuItem fx:id="quit" accelerator="Shortcut+q"
+                      onAction="#quit" text="Quit"/>
           </Menu>
           <Menu text="Edit">
             <MenuItem accelerator="Shortcut+z" onAction="#undo" text="Undo"/>
@@ -117,8 +119,8 @@
                           styleClass="autoZoomButton">
               <tooltip><Tooltip text="Toggle Auto Zoom"/></tooltip>
             </ToggleButton>
-            <Button fx:id="repairBtn" onAction="#repairSecondary"
-                    styleClass="repairButton">
+            <Button fx:id="restoreBtn" onAction="#restoreSecondary"
+                    styleClass="restoreButton">
               <tooltip><Tooltip text="Repair Secondary Structure"/></tooltip>
             </Button>
           </HBox>
@@ -151,5 +153,6 @@
       </VBox>
     </top>
   </BorderPane>
+  <Label fx:id="loading" text="Loading..."/>
   <VBox fx:id="splashLayout" id="splash"/>
 </StackPane>
