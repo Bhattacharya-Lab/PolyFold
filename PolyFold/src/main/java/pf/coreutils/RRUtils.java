@@ -10,11 +10,12 @@ public class RRUtils {
   public static String secondarySequence;
   public static int sequenceLen;
 
-  public static boolean parseRR(File f) throws IOException {
+  public static int parseRR(File f) throws IOException {
     BufferedReader br = new BufferedReader(new FileReader(f));
     aminoSequence = br.readLine();
     // Do not work on files with no sequence
-    if (aminoSequence == null || aminoSequence.length() == 0) return false;
+    if (aminoSequence == null || aminoSequence.length() == 0) return 1;
+    if (aminoSequence.length() > 300) return 2;
     secondarySequence = br.readLine();
     // Trim sequences
     aminoSequence = aminoSequence.trim();
@@ -39,6 +40,6 @@ public class RRUtils {
       currentLine = br.readLine();
     }
     br.close();
-    return true;
+    return 0;
   }
 }
