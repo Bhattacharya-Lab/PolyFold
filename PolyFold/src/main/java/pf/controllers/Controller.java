@@ -8,6 +8,7 @@ import java.util.LinkedList;
 /* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.*;
@@ -50,6 +51,9 @@ public class Controller {
 
   /* Fullscreen the window */
   public void fullscreen() { stage.setFullScreen(true); }
+
+  /* Quit application */
+  public void quit() { Platform.exit(); }
 
   /* Show about window */
   public void showAbout() { aux.showAbout(); }
@@ -145,9 +149,11 @@ public class Controller {
   public void initSequence() {
     initAngularArray();
     residues = updateResidues(/*selectionIndex=*/-1);
-    resetResidueLabels();
-    buildSequence();
-    cam.updateZoom(world);
+    Platform.runLater(() -> {
+      resetResidueLabels();
+      buildSequence();
+      cam.updateZoom(world);
+    });
   }
 
   /* Initialize angles of sequence based on amino sequence and secondary
@@ -185,7 +191,7 @@ public class Controller {
     }
   }
 
-  public void repairSecondary() {
+  public void restoreSecondary() {
     boolean hasSecondaryStructure = (
         RRUtils.secondarySequence != null &&
         RRUtils.secondarySequence.length() == RRUtils.aminoSequence.length());
@@ -194,10 +200,8 @@ public class Controller {
     // Considering tetra-peptides
     for (int i = 1; i < n-1; i++) {
       char ss = angles[i].ss;
-      if (ss == 'H' || ss == 'E') {
-        angles[i].theta = Limits.clipPlanar(angles[i].theta, ss);
-        if (i != n-2) angles[i].tao = Limits.clipDihedral(angles[i].tao, ss);
-      }
+      angles[i].theta = Limits.idealPlanar(ss);
+      if (i != n-2) angles[i].tao = Limits.idealDihedral(ss);
     }
     updateStructure(angles, /*updateZoom=*/true);
   }
@@ -412,10 +416,15 @@ public class Controller {
     fileModal.getExtensionFilters().addAll(new ExtensionFilter("RR File \".rr\"", "*.rr"));
     File f = fileModal.showOpenDialog(app.getScene().getWindow());
     if (f != null) {
-      if (RRUtils.parseRR(f)) {
+      int success = RRUtils.parseRR(f);
+      if (success == 0) {
         History.clear();
         stage.setTitle("PolyFold (Beta Version) - " + FileUtils.getBaseName(f));
         showProteinMovementUI();
+      } else if (success == 1) {
+        showOverlay("Invalid RR: Empty / Format");
+      } else {
+        showOverlay("Invalid RR: Sequence Length > 300");
       }
     }
   }
@@ -431,7 +440,7 @@ public class Controller {
   public static final int DISTANCE_MAP_WIDTH = 280;
 
   public void generateDistanceMap() {
-    distanceMap.getChildren().clear();
+    Platform.runLater(() -> distanceMap.getChildren().clear());
     currentSequenceMaxDist = 0.0;
     cellSize = min(max(DISTANCE_MAP_WIDTH / RRUtils.sequenceLen, 1), 3);
     adjMatrix = LinearAlgebra.adjacencyMatrix(residues);
@@ -450,8 +459,10 @@ public class Controller {
       }
     }
     currentSequenceMaxDist = max(DISTANCE_THRESHOLD, currentSequenceMaxDist);
-    buildDistanceMap();
-    updateScore();
+    Platform.runLater(() -> {
+      buildDistanceMap();
+      updateScore();
+    });
   }
 
 
@@ -590,7 +601,7 @@ public class Controller {
     try {
       Platform.runLater(() -> {
         updateStructure(angles);
-        showOptimizationComplete();
+        if (!killOptimization) showOptimizationComplete();
       });
     } catch (Exception exc) { exc.printStackTrace(); }
   }
@@ -649,10 +660,12 @@ public class Controller {
     try {
       Platform.runLater(() -> {
         updateStructure(angles);
-        if (MonteCarlo.currentEnergy > MonteCarlo.lowestEnergy) {
-          showRecoverLowest();
-        } else {
-          showOptimizationComplete();
+        if (!killOptimization) {
+          if (MonteCarlo.currentEnergy > MonteCarlo.lowestEnergy) {
+            showRecoverLowest();
+          } else {
+            showOptimizationComplete();
+          }
         }
       });
     } catch (Exception exc) { exc.printStackTrace(); }
@@ -675,7 +688,7 @@ public class Controller {
   }
 
   // Non-critical UI controls
-  @FXML Button gradDescentBtn, infoBtn, monteCarloBtn, redoBtn, repairBtn, undoBtn;
+  @FXML Button gradDescentBtn, infoBtn, monteCarloBtn, redoBtn, restoreBtn, undoBtn;
   @FXML MenuBar menubar;
   @FXML ToggleButton autoZoomBtn;
   /* Disable all non-critical elements of UI to prevent users from running
@@ -684,7 +697,7 @@ public class Controller {
    */
   public void disableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
-      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn, repairBtn, undoBtn
+      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn, restoreBtn, undoBtn
     };
     for (Node n : nonCritical) n.setDisable(true);
   }
@@ -692,7 +705,7 @@ public class Controller {
   /* Enable non-critical UI elements upon completion of volatile function */
   public void enableNonCriticalFunctions() {
     Node[] nonCritical = new Node[]{
-      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn, repairBtn, undoBtn
+      autoZoomBtn, gradDescentBtn, infoBtn, menubar, monteCarloBtn, redoBtn, restoreBtn, undoBtn
     };
     for (Node n : nonCritical) n.setDisable(false);
   }
@@ -755,15 +768,22 @@ public class Controller {
     });
   }
 
+  @FXML Label loading;
   /* Show right info panel on successful load of protein file */
   public void showProteinMovementUI() {
-    hideSplash();
-    initSequence();
-    generateDistanceMap();
-    initSliders();
-    disableSliders();
-    resetResidueLabels();
-    app.getRight().setVisible(true);
+    new Thread(() -> {
+      loading.setVisible(true);
+      hideSplash();
+      initSequence();
+      generateDistanceMap();
+      Platform.runLater(() -> {
+        initSliders();
+        disableSliders();
+      });
+      app.getRight().setVisible(true);
+      loading.setVisible(false);
+    }).start();
+
   }
 
   /* Hide all protein UI info */
