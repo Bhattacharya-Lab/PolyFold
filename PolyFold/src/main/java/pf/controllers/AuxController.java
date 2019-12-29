@@ -77,7 +77,7 @@ public class AuxController {
   public void handleLicense(Scene scene) {
     try {
       Desktop d = Desktop.getDesktop();
-      d.browse(new URI("https://gnu.org/licenses"));
+      d.browse(new URI("https://gnu.org/licenses/#GPL"));
     } catch (Exception exc) { exc.printStackTrace(); }
   }
 
