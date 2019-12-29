@@ -24,18 +24,18 @@
     <VBox style="-fx-spacing: 12">
       <VBox>
         <Label styleClass="alert-content"
-               text="Developed by: Andrew J. McGehee, Hudson Chromy"
+               text="Developed by: Andrew J. McGehee"
                wrapText="true"/>
         <Label styleClass="alert-content"
-               text="Copyright &#169; Bhattacharya Laboratory 2019-2025, All rights reserved."
+               text="Copyright &#169; Bhattacharya Laboratory 2020-2030, All rights reserved."
                wrapText="true"/>
       </VBox>
       <VBox>
         <Label styleClass="alert-content"
-               text="Click License to display GNU General Public License details."
+               text="Click the License button below for license details."
                wrapText="true"/>
         <Label styleClass="alert-content"
-               text="Click Website to visit the PolyFold website."
+               text="Click the Website button below to visit the PolyFold GitHub repository."
                wrapText="true"/>
       </VBox>
       <HBox>

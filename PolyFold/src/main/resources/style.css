@@ -440,10 +440,6 @@
   -fx-max-height: 512;
 }
 
-#loading {
-  visibility: hidden;
-}
-
 .alert:header {
   -fx-background-color: #273238;
 }

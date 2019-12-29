@@ -153,6 +153,5 @@
       </VBox>
     </top>
   </BorderPane>
-  <Label fx:id="loading" text="Loading..."/>
   <VBox fx:id="splashLayout" id="splash"/>
 </StackPane>

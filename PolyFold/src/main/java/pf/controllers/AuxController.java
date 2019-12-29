@@ -65,7 +65,7 @@ public class AuxController {
     aboutStage.setScene(scene);
     aboutStage.setResizable(false);
     // Handle buttons
-    licenseBtn.setOnMouseReleased(e -> handleSaveLicense(scene));
+    licenseBtn.setOnMouseReleased(e -> handleLicense(scene));
     logoBtn.setOnMouseReleased(e -> handleWebsite());
     websiteBtn.setOnMouseReleased(e -> handleWebsite());
     cancelBtn.setOnMouseReleased(e -> aboutStage = closeStage(aboutStage));
@@ -74,30 +74,18 @@ public class AuxController {
   }
 
   /* Save GNU public license to file */
-  public void handleSaveLicense(Scene scene) {
+  public void handleLicense(Scene scene) {
     try {
-      FileChooser fileModal = new FileChooser();
-      fileModal.setTitle("Save As...");
-      fileModal.getExtensionFilters().add(
-          new FileChooser.ExtensionFilter("Text File \".txt\"", "*.txt"));
-      File f = fileModal.showSaveDialog(scene.getWindow());
-      if (f == null) return;
-      // Write license to file
-      InputStream iStream = getClass().getResourceAsStream("/docs/LICENSE");
-      byte[] buff = new byte[iStream.available()];
-      iStream.read(buff);
-      iStream.close();
-      OutputStream oStream = new FileOutputStream(f);
-      oStream.write(buff);
-      oStream.close();
-    } catch (IOException exc) { exc.printStackTrace(); }
+      Desktop d = Desktop.getDesktop();
+      d.browse(new URI("https://gnu.org/licenses"));
+    } catch (Exception exc) { exc.printStackTrace(); }
   }
 
   /* Open PolyFold website in browser */
   public void handleWebsite() {
     try {
       Desktop d = Desktop.getDesktop();
-      d.browse(new URI("http://Bhattacharya-Lab.github.io/PolyFold"));
+      d.browse(new URI("https://github.com/Bhattacharya-Lab/PolyFold"));
     } catch (Exception exc) { exc.printStackTrace(); }
   }
 
@@ -360,6 +348,20 @@ public class AuxController {
     cancelBtn.setOnMouseReleased(e -> loadStateStage = closeStage(loadStateStage));
     loadStateStage.show();
     loadStateStage.setOnCloseRequest(e -> loadStateStage = null);
+  }
+
+  Stage loading;
+  public void showLoading() {
+    Scene scene = new Scene(loadFXML("/fxml/loading.fxml"), 300, 100);
+    scene.getStylesheets().add("/style.css");
+    loading = new Stage(StageStyle.UNDECORATED);
+    loading.setScene(scene);
+    loading.setResizable(false);
+    loading.show();
+  }
+
+  public void hideLoading() {
+    closeStage(loading);
   }
 
   /* Utility for closing a window and setting it to null */

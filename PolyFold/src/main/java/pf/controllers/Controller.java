@@ -5,10 +5,10 @@ import java.io.*;
 import static java.lang.Math.*;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
+import java.util.concurrent.CountDownLatch;
 /* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.*;
@@ -482,11 +482,7 @@ public class Controller {
           rect.setFill(Colors.BLACK);
         } else {
           double value = adjMatrix[i][j];
-          if (value > currentSequenceMaxDist) {
-            rect.setFill(Colors.INVALID);
-          } else {
-            rect.setFill(Colors.getColorFromValue(value));
-          }
+          rect.setFill(Colors.getColorFromValue(value));
         }
         distanceMap.add(rect, j, i);
         rectangles[i][j] = rect;
@@ -768,22 +764,27 @@ public class Controller {
     });
   }
 
-  @FXML Label loading;
   /* Show right info panel on successful load of protein file */
   public void showProteinMovementUI() {
+    CountDownLatch latch = new CountDownLatch(1);
+    aux.showLoading();
     new Thread(() -> {
-      loading.setVisible(true);
-      hideSplash();
       initSequence();
       generateDistanceMap();
-      Platform.runLater(() -> {
-        initSliders();
-        disableSliders();
-      });
-      app.getRight().setVisible(true);
-      loading.setVisible(false);
+      initSliders();
+      disableSliders();
+      latch.countDown();
     }).start();
-
+    new Thread(() -> {
+      try {
+        latch.await();
+      } catch (Exception exc) { exc.printStackTrace(); }
+      Platform.runLater(() -> {
+        aux.hideLoading();
+        hideSplash();
+        app.getRight().setVisible(true);
+      });
+    }).start();
   }
 
   /* Hide all protein UI info */
