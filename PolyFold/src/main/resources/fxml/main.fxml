@@ -121,7 +121,7 @@
             </ToggleButton>
             <Button fx:id="restoreBtn" onAction="#restoreSecondary"
                     styleClass="restoreButton">
-              <tooltip><Tooltip text="Repair Secondary Structure"/></tooltip>
+              <tooltip><Tooltip text="Restore Idealized Secondary Structure"/></tooltip>
             </Button>
           </HBox>
           <HBox id="middleTools">
