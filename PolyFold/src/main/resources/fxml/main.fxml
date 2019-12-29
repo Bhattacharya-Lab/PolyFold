@@ -22,7 +22,7 @@
             <Text styleClass="movement-label" text="INTERACTION MAP"/>
             <Separator styleClass="separator"/>
             <HBox fx:id="distanceBox" id="distanceBox">
-              <GridPane fx:id="distanceMap" id="distanceMap"/>
+              <ImageView fx:id="distanceMap"></ImageView>
             </HBox>
             <HBox styleClass="score-label">
               <ProgressBar fx:id="progressBar" progress="0.0"

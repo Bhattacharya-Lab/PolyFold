@@ -430,19 +430,16 @@ public class Controller {
   }
 
   // contact map fields
-  @FXML public GridPane distanceMap;
   @FXML public Text score;
 
   public static double[][] adjMatrix;
-  public static int cellSize;
   public static double currentSequenceMaxDist;
   public static final double DISTANCE_THRESHOLD = 100;
-  public static final int DISTANCE_MAP_WIDTH = 280;
+  public static final int DISTANCE_MAP_MIN_SIZE = 180;
+  public static final int DISTANCE_MAP_MAX_SIZE = 280;
 
   public void generateDistanceMap() {
-    Platform.runLater(() -> distanceMap.getChildren().clear());
     currentSequenceMaxDist = 0.0;
-    cellSize = min(max(DISTANCE_MAP_WIDTH / RRUtils.sequenceLen, 1), 3);
     adjMatrix = LinearAlgebra.adjacencyMatrix(residues);
     for (int i = 0; i < RRUtils.sequenceLen; i++) {
       for (int j = 0; j < RRUtils.sequenceLen; j++) {
@@ -466,34 +463,38 @@ public class Controller {
   }
 
 
-  Rectangle[][] rectangles;
   @FXML HBox distanceBox;
+  @FXML ImageView distanceMap;
+  WritableImage distanceMapImg;
+  PixelWriter distanceMapWriter;
   ImageView colorBar;
   NumberAxis ticks;
   LineChart<Number, Number> chart;
 
   public void buildDistanceMap() {
-    rectangles = new Rectangle[RRUtils.sequenceLen][RRUtils.sequenceLen];
+    // This is for fit height and width ONLY; not for array bounds
+    int side = min(DISTANCE_MAP_MAX_SIZE, max(DISTANCE_MAP_MIN_SIZE, RRUtils.sequenceLen));
+    distanceMap.setFitHeight(side);
+    distanceMap.setFitWidth(side);
+    distanceMapImg = new WritableImage(RRUtils.sequenceLen, RRUtils.sequenceLen);
+    distanceMapWriter = distanceMapImg.getPixelWriter();
     for (int i = 0; i < RRUtils.sequenceLen; i++) {
       for (int j = 0; j < RRUtils.sequenceLen; j++) {
-        Rectangle rect = new Rectangle(cellSize, cellSize);
-        rect.setStyle("-fx-stroke-width: 0;");
         if (i == j) {
-          rect.setFill(Colors.BLACK);
+          distanceMapWriter.setColor(j, i, Colors.BLACK);
         } else {
           double value = adjMatrix[i][j];
-          rect.setFill(Colors.getColorFromValue(value));
+          distanceMapWriter.setColor(j, i, Colors.getColorFromValue(value));
         }
-        distanceMap.add(rect, j, i);
-        rectangles[i][j] = rect;
       }
     }
+    distanceMap.setImage(distanceMapImg);
     Scoring.setMaxScore();
     if (colorBar != null || ticks != null) {
       distanceBox.getChildren().remove(colorBar);
       distanceBox.getChildren().remove(ticks);
     }
-    colorBar = new ImageView(createColorBar(5, cellSize * RRUtils.sequenceLen));
+    colorBar = new ImageView(createColorBar(5, side));
     distanceBox.getChildren().add(colorBar);
     ticks = new NumberAxis(0, 25 * ((int) currentSequenceMaxDist / 25 + 1), 25);
     ticks.setSide(Side.RIGHT);
@@ -527,11 +528,7 @@ public class Controller {
       for (int j = 0; j < i; j++) {
         // only run on bottom triangle
         double value = adjMatrix[i][j];
-        if (value > currentSequenceMaxDist) {
-          rectangles[i][j].setFill(Colors.INVALID);
-        } else {
-          rectangles[i][j].setFill(Colors.getColorFromValue(value));
-        }
+        distanceMapWriter.setColor(j, i, Colors.getColorFromValue(value));
       }
     }
   }
@@ -766,25 +763,12 @@ public class Controller {
 
   /* Show right info panel on successful load of protein file */
   public void showProteinMovementUI() {
-    CountDownLatch latch = new CountDownLatch(1);
-    aux.showLoading();
-    new Thread(() -> {
-      initSequence();
-      generateDistanceMap();
-      initSliders();
-      disableSliders();
-      latch.countDown();
-    }).start();
-    new Thread(() -> {
-      try {
-        latch.await();
-      } catch (Exception exc) { exc.printStackTrace(); }
-      Platform.runLater(() -> {
-        aux.hideLoading();
-        hideSplash();
-        app.getRight().setVisible(true);
-      });
-    }).start();
+    initSequence();
+    generateDistanceMap();
+    initSliders();
+    disableSliders();
+    hideSplash();
+    app.getRight().setVisible(true);
   }
 
   /* Hide all protein UI info */
