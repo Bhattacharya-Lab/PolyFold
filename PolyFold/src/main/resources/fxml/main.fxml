@@ -85,8 +85,8 @@
                       onAction="#openFile" text="Open..."/>
             <MenuItem fx:id="saveMenu" accelerator="Shortcut+s"
                       onAction="#saveToPDB" text="Save As..."/>
-            <MenuItem fx:id="quit" accelerator="Shortcut+q"
-                      onAction="#quit" text="Quit"/>
+            <MenuItem accelerator="Shortcut+w" onAction="#closeSession" text="Close Session"/>
+            <MenuItem accelerator="Shortcut+q" onAction="#quit" text="Quit"/>
           </Menu>
           <Menu text="Edit">
             <MenuItem accelerator="Shortcut+z" onAction="#undo" text="Undo"/>
