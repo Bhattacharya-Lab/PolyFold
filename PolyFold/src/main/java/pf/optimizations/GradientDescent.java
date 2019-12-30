@@ -30,11 +30,11 @@ public class GradientDescent {
   }
 
   public static void normalizeCarts() {
-    for (int i = 0; i < carts.length-1; i++) {
-      Point unscaled = pointSubtract(carts[i+1].ca, carts[i].ca);
+    for (int i = 1; i < carts.length; i++) {
+      Point unscaled = pointSubtract(carts[i].ca, carts[i-1].ca);
       Point scaled = scale(unitVector(unscaled), Converter.BOND_LEN);
       Point shift = pointSubtract(scaled, unscaled);
-      for (int j = i+1; j < carts.length; j++) {
+      for (int j = i; j < carts.length; j++) {
         carts[j].ca = pointAdd(carts[j].ca, shift);
       }
     }
