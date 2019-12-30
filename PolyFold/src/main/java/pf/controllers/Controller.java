@@ -5,7 +5,6 @@ import java.io.*;
 import static java.lang.Math.*;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
-import java.util.concurrent.CountDownLatch;
 /* ************************* JAVAFX IMPORTS ********************************* */
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -52,8 +51,19 @@ public class Controller {
   /* Fullscreen the window */
   public void fullscreen() { stage.setFullScreen(true); }
 
+  public void closeSession() {
+    carts = null;
+    angles = null;
+    residues = null;
+    sequence.getChildren().clear();
+    world.getChildren().clear();
+    hideProteinMovementUI();
+    showSplash();
+  }
+
   /* Quit application */
   public void quit() { Platform.exit(); }
+
 
   /* Show about window */
   public void showAbout() { aux.showAbout(); }
@@ -113,7 +123,7 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public final int GD_UPDATE_RATE = 512;
+  public final int GD_UPDATE_RATE = 64;
   public final int MC_UPDATE_RATE = 8;
   // Residue representation related fields;
   public static Residue[] residues;
@@ -192,6 +202,7 @@ public class Controller {
   }
 
   public void restoreSecondary() {
+    if (angles == null) return;
     boolean hasSecondaryStructure = (
         RRUtils.secondarySequence != null &&
         RRUtils.secondarySequence.length() == RRUtils.aminoSequence.length());
@@ -208,11 +219,11 @@ public class Controller {
 
   /* Rebuild residue array based on new cartesian locations */
   public static void setResidueArray() {
-    carts = Converter.anglesToCarts(angles);
+    Cartesian[] tmp = Converter.anglesToCarts(angles);
     int n = RRUtils.sequenceLen;
     residues = new Residue[n];
     for (int i = 0; i < n; i++) {
-      residues[i] = new Residue(carts[i], (i == n-1));
+      residues[i] = new Residue(tmp[i], (i == n-1));
       residues[i].id = i;
       if (i > 0) residues[i-1].rotateRod(residues[i]);
     }
@@ -584,19 +595,15 @@ public class Controller {
       if (killOptimization) break;
       carts = GradientDescent.getNextState(carts);
       if (i % GD_UPDATE_RATE == 0) {
-        Cartesian[] tmpCarts = Converter.cartesianCopy(carts);
-        try {
-          Platform.runLater(() -> updateStructure(Converter.cartsToAngles(tmpCarts)));
-        } catch (Exception exc) {}
+        final Angular[] tmpAngles = Converter.cartsToAngles(carts);
+        Platform.runLater(()-> updateStructure(tmpAngles));
       }
     }
     angles = Converter.cartsToAngles(carts);
-    try {
-      Platform.runLater(() -> {
-        updateStructure(angles);
-        if (!killOptimization) showOptimizationComplete();
-      });
-    } catch (Exception exc) { exc.printStackTrace(); }
+    Platform.runLater(() -> {
+      updateStructure(angles);
+      if (!killOptimization) showOptimizationComplete();
+    });
   }
 
   public void updateStructure(Angular[] update) {
@@ -608,7 +615,7 @@ public class Controller {
   }
 
   public void updateStructure(Angular[] update, boolean updateZoom) {
-    angles = update;
+    for (int i = 0; i < update.length; i++) angles[i] = new Angular(update[i]);
     residues = updateResidues(-1);
     buildSequence();
     updateScore();
@@ -643,25 +650,21 @@ public class Controller {
       MonteCarlo.setTemperature(i);
       angles = MonteCarlo.getNextState(angles);
       if (i % MC_UPDATE_RATE == 0) {
-        Angular[] tmpAngles = Converter.angularCopy(angles);
-        try {
-          Platform.runLater(() -> updateStructure(tmpAngles));
-        } catch (Exception exc) {}
+        final Angular[] tmpAngles = Converter.angularCopy(angles);
+        Platform.runLater(() -> updateStructure(tmpAngles));
       }
       i++;
     }
-    try {
-      Platform.runLater(() -> {
-        updateStructure(angles);
-        if (!killOptimization) {
-          if (MonteCarlo.currentEnergy > MonteCarlo.lowestEnergy) {
-            showRecoverLowest();
-          } else {
-            showOptimizationComplete();
-          }
+    Platform.runLater(() -> {
+      updateStructure(angles);
+      if (!killOptimization) {
+        if (MonteCarlo.currentEnergy > MonteCarlo.lowestEnergy) {
+          showRecoverLowest();
+        } else {
+          showOptimizationComplete();
         }
-      });
-    } catch (Exception exc) { exc.printStackTrace(); }
+      }
+    });
   }
 
   /* Undo a move */
