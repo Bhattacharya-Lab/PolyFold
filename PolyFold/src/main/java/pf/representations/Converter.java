@@ -8,9 +8,8 @@ public class Converter {
   public static Angular[] cartsToAngles(Cartesian[] carts) {
     int n = carts.length;
     Angular[] angles = new Angular[n];
-    Angular a;
     for (int i = 0; i < n; i++) {
-      a = new Angular();
+      Angular a = new Angular();
       a.id = i;
       // tao
       if (i == 0 || i == n-1 || i == n-2) a.tao = 2 * Math.PI;
@@ -46,15 +45,14 @@ public class Converter {
     carts[1] = c;
     // third node at bond angle and bond length
     c = new Cartesian();
-    c.ca = setCoordinate(N, carts[0].ca, carts[1].ca, c.ca, angles[1].theta,
-                         angles[1].tao);
+    c.ca = setCoordinate(N, carts[0].ca, carts[1].ca, angles[1].theta, angles[1].tao);
     c.aa = angles[2].aa;
     c.ss = angles[2].ss;
     carts[2] = c;
     for (int i = 3; i < n; i++) {
       c = new Cartesian();
-      c.ca = setCoordinate(carts[i-3].ca, carts[i-2].ca, carts[i-1].ca, c.ca,
-                           angles[i-1].theta, angles[i-2].tao);
+      c.ca = setCoordinate(carts[i-3].ca, carts[i-2].ca, carts[i-1].ca, angles[i-1].theta,
+                           angles[i-2].tao);
       c.aa = angles[i].aa;
       c.ss = angles[i].ss;
       carts[i] = c;
@@ -91,8 +89,7 @@ public class Converter {
     return cartsToResidues(anglesToCarts(angles));
   }
 
-  public static Point setCoordinate(Point a, Point b, Point c, Point d,
-                                    double theta, double tao) {
+  public static Point setCoordinate(Point a, Point b, Point c, double theta, double tao) {
     Point u = pointSubtract(b, a);
     Point v = unitVector(pointSubtract(c, b));
     Point norm = unitVector(crossProduct(u, v));
