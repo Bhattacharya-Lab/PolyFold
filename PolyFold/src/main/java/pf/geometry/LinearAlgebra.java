@@ -60,23 +60,22 @@ public class LinearAlgebra {
   }
 
   public static double planarAngle(Point a, Point b, Point c) {
-    Point u = pointSubtract(b, a);
-    Point v = pointSubtract(b, c);
-    double theta = dotProduct(u, v) / (magnitude(u) * magnitude(v));
+    Point u = unitVector(pointSubtract(b, a));
+    Point v = unitVector(pointSubtract(b, c));
+    double theta = dotProduct(u, v);
     return acos(theta);
   }
 
   public static double dihedralAngle(Point a, Point b, Point c, Point d) {
-    Point origin = new Point();
-    Point u = unitVector(pointSubtract(b, a));
-    Point v = unitVector(pointSubtract(c, b));
-    Point t = unitVector(pointSubtract(d, c));
-    Point n1 = crossProduct(u, v);
-    Point n2 = crossProduct(v, t);
-    Point m = crossProduct(n1, v);
+    Point u = pointSubtract(b, a);
+    Point v = pointSubtract(c, b);
+    Point t = pointSubtract(d, c);
+    Point n1 = unitVector(crossProduct(u, v));
+    Point n2 = unitVector(crossProduct(v, t));
+    Point m = crossProduct(n1, unitVector(v));
     double x = dotProduct(n1, n2);
     double y = dotProduct(m, n2);
-    return -1 * atan2(y, x);
+    return atan2(y, x);
   }
 
   public static double determinant(Point[] M) {
