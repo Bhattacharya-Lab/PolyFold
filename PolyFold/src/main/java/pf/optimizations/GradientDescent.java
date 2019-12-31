@@ -7,11 +7,11 @@ import pf.representations.*;
 public class GradientDescent {
   public static Cartesian[] carts;
   public static double stepSize = 0.004;
-  public static int iterations = 80000;
-  public static final int MIN_ITERS = 50000;
-  public static final int MAX_ITERS = 550000;
+  public static int iterations = 20000;
+  public static final int MIN_ITERS = 5000;
+  public static final int MAX_ITERS = 500000;
   public static final double MIN_STEP = 0;
-  public static final double MAX_STEP = 0.05;
+  public static final double MAX_STEP = 0.03;
 
   public static Cartesian[] getNextState(Cartesian[] state) {
     carts = new Cartesian[state.length];
