@@ -105,7 +105,7 @@ public class Controller {
     Label overlay = new Label(text);
     overlayQ.addLast(overlay);
     stackPane.getChildren().add(overlay);
-    FadeTransition ft = new FadeTransition(Duration.seconds(1.4), overlay);
+    FadeTransition ft = new FadeTransition(Duration.seconds(1.8), overlay);
     ft.setFromValue(1);
     ft.setToValue(0);
     ft.setInterpolator(Interpolator.EASE_IN);
@@ -419,9 +419,8 @@ public class Controller {
         stage.setTitle("PolyFold (Beta Version) - " + FileUtils.getBaseName(f));
         deselect(selectedResidue);
         showProteinMovementUI();
-        if (RRUtils.improperSecondary) showOverlay("Invalid Secondary Structure");
       } else if (success == 1) {
-        showOverlay("Invalid RR: Empty / Format");
+        showOverlay("Invalid RR: Empty / Improper Format");
       } else {
         showOverlay("Invalid RR: Sequence Length > 500");
       }
@@ -573,9 +572,7 @@ public class Controller {
   public void startGradientDescent() {
     if (residues == null) return;
     // Use a logarithmic schedule for adaptive update rate for gradient descent
-    int power = RRUtils.sequenceLen / 100;
-    gd_update_rate = 256;
-    while (power-- > 0) gd_update_rate /= 2;
+    gd_update_rate = max(16, (int) (256 / Math.pow(2, RRUtils.sequenceLen / 100.0)));
     History.addUndoState(angles);
     disableSliders();
     resetResidueLabels();
