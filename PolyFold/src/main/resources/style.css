@@ -391,12 +391,12 @@
 }
 
 .gd-slider > #iterSlider {
-  -fx-major-tick-unit: 100;
+  -fx-major-tick-unit: 50;
   -fx-snap-to-ticks: true;
 }
 
 .gd-slider > #stepSlider {
-  -fx-major-tick-unit: 10;
+  -fx-major-tick-unit: 5;
 }
 
 .gd-slider > #decaySlider {
