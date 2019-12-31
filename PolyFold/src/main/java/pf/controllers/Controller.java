@@ -123,7 +123,7 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public final int GD_UPDATE_RATE = 128;
+  public int gd_update_rate; // adapative
   public final int MC_UPDATE_RATE = 8;
   // Residue representation related fields;
   public static Residue[] residues;
@@ -170,9 +170,6 @@ public class Controller {
    * structure
    */
   public static void initAngularArray() {
-    boolean hasSecondaryStructure = (
-        RRUtils.secondarySequence != null &&
-        RRUtils.secondarySequence.length() == RRUtils.aminoSequence.length());
     // Initialize angles based on info given
     int n = RRUtils.sequenceLen;
     angles = new Angular[n];
@@ -184,18 +181,11 @@ public class Controller {
       if (i == 0 || i == n-1) a.theta = 2 * PI;
       // 0, n-1, and n-2 nodes have no dihedral angle
       if (i == 0 || i == n-1 || i == n-2) a.tao = 2 * PI;
-      if (hasSecondaryStructure) {
-        char ss = RRUtils.secondarySequence.charAt(i);
-        a.ss = ss;
-        if (i != 0 && i != n-1) {
-          a.theta = Limits.idealPlanar(ss);
-          if (i != n-2) a.tao = Limits.idealDihedral(ss);
-        }
-      } else {
-        if (i != 0 && i != n-1) {
-          a.theta = toRadians(110);
-          if (i != n-2) a.tao = toRadians(-150.0);
-        }
+      char ss = RRUtils.secondarySequence.charAt(i);
+      a.ss = ss;
+      if (i != 0 && i != n-1) {
+        a.theta = Limits.idealPlanar(ss);
+        if (i != n-2) a.tao = Limits.idealDihedral(ss);
       }
       angles[i] = a;
     }
@@ -203,10 +193,6 @@ public class Controller {
 
   public void restoreSecondary() {
     if (angles == null) return;
-    boolean hasSecondaryStructure = (
-        RRUtils.secondarySequence != null &&
-        RRUtils.secondarySequence.length() == RRUtils.aminoSequence.length());
-    if (!hasSecondaryStructure) return;
     int n = RRUtils.sequenceLen;
     // Considering tetra-peptides
     for (int i = 1; i < n-1; i++) {
@@ -431,11 +417,13 @@ public class Controller {
       if (success == 0) {
         History.clear();
         stage.setTitle("PolyFold (Beta Version) - " + FileUtils.getBaseName(f));
+        deselect(selectedResidue);
         showProteinMovementUI();
+        if (RRUtils.improperSecondary) showOverlay("Invalid Secondary Structure");
       } else if (success == 1) {
         showOverlay("Invalid RR: Empty / Format");
       } else {
-        showOverlay("Invalid RR: Sequence Length > 300");
+        showOverlay("Invalid RR: Sequence Length > 500");
       }
     }
   }
@@ -584,6 +572,10 @@ public class Controller {
 
   public void startGradientDescent() {
     if (residues == null) return;
+    // Use a logarithmic schedule for adaptive update rate for gradient descent
+    int power = RRUtils.sequenceLen / 100;
+    gd_update_rate = 256;
+    while (power-- > 0) gd_update_rate /= 2;
     History.addUndoState(angles);
     disableSliders();
     resetResidueLabels();
@@ -606,7 +598,7 @@ public class Controller {
     for (int i = 0; i <= GradientDescent.iterations; i++) {
       if (killOptimization) break;
       carts = GradientDescent.getNextState(carts);
-      if (i % GD_UPDATE_RATE == 0) {
+      if (i % gd_update_rate == 0) {
         final Angular[] tmpAngles = Converter.cartsToAngles(carts);
         Platform.runLater(()-> updateStructure(tmpAngles));
       }
