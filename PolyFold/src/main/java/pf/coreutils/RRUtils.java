@@ -8,7 +8,6 @@ public class RRUtils {
   public static double[][] expectedDistance;
   public static String aminoSequence;
   public static String secondarySequence;
-  public static boolean improperSecondary;
   public static int sequenceLen;
 
   public static int parseRR(File f) throws IOException {
@@ -17,17 +16,11 @@ public class RRUtils {
     // Do not work on files with no sequence
     if (aminoSequence == null || aminoSequence.length() == 0) return 1;
     if (aminoSequence.length() > 500) return 2;
-    improperSecondary = false;
     secondarySequence = br.readLine();
     // Trim sequences
     aminoSequence = aminoSequence.trim();
     if (secondarySequence != null) secondarySequence = secondarySequence.trim();
-    if (secondarySequence.length() != aminoSequence.length()) {
-      StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < aminoSequence.length(); i++) sb.append("C");
-      secondarySequence = sb.toString();
-      improperSecondary = true;
-    }
+    if (secondarySequence.length() != aminoSequence.length()) return 1;
     // Side length of matrix
     sequenceLen = aminoSequence.length();
     expectedDistance = new double[sequenceLen][sequenceLen];
