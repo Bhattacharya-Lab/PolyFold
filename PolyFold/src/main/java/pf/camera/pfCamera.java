@@ -10,9 +10,9 @@ import javafx.scene.transform.Rotate;
 public class pfCamera extends PerspectiveCamera {
   public final double INITIAL_Z = 100;
   public final double NEAR_CLIP = 0.1;
-  public final double FAR_CLIP = 2000;
+  public final double FAR_CLIP = 5000;
   public final double MIN_ZOOM = 30;
-  public final double MAX_ZOOM = 1000;
+  public final double MAX_ZOOM = 5000;
   public double trackSpeed = INITIAL_Z / 1000.0;
   public boolean isAutoZoomed = false;
 

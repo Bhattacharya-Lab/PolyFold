@@ -123,7 +123,7 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public final int GD_UPDATE_RATE = 64;
+  public final int GD_UPDATE_RATE = 128;
   public final int MC_UPDATE_RATE = 8;
   // Residue representation related fields;
   public static Residue[] residues;
@@ -481,21 +481,27 @@ public class Controller {
   ImageView colorBar;
   NumberAxis ticks;
   LineChart<Number, Number> chart;
+  int scale = 1;
 
   public void buildDistanceMap() {
     // This is for fit height and width ONLY; not for array bounds
-    int side = min(DISTANCE_MAP_MAX_SIZE, max(DISTANCE_MAP_MIN_SIZE, RRUtils.sequenceLen));
-    distanceMap.setFitHeight(side);
-    distanceMap.setFitWidth(side);
-    distanceMapImg = new WritableImage(RRUtils.sequenceLen, RRUtils.sequenceLen);
+    int side = RRUtils.sequenceLen;
+    while (RRUtils.sequenceLen * (scale+1) < DISTANCE_MAP_MAX_SIZE) scale++;
+    side *= scale;
+    distanceMapImg = new WritableImage(side, side);
     distanceMapWriter = distanceMapImg.getPixelWriter();
+    int fit = min(DISTANCE_MAP_MAX_SIZE, max(DISTANCE_MAP_MIN_SIZE, side));
+    distanceMap.setFitHeight(fit);
+    distanceMap.setFitWidth(fit);
     for (int i = 0; i < RRUtils.sequenceLen; i++) {
       for (int j = 0; j < RRUtils.sequenceLen; j++) {
-        if (i == j) {
-          distanceMapWriter.setColor(j, i, Colors.BLACK);
-        } else {
-          double value = adjMatrix[i][j];
-          distanceMapWriter.setColor(j, i, Colors.getColorFromValue(value));
+        double value = adjMatrix[i][j];
+        for (int k = 0; k < scale; k++) {
+          for (int l = 0; l < scale; l++) {
+            if (i == j) distanceMapWriter.setColor(scale*j+k, scale*i+l, Colors.BLACK);
+            else distanceMapWriter.setColor(scale*j + k, scale*i + l,
+                                            Colors.getColorFromValue(value));
+          }
         }
       }
     }
@@ -505,7 +511,7 @@ public class Controller {
       distanceBox.getChildren().remove(colorBar);
       distanceBox.getChildren().remove(ticks);
     }
-    colorBar = new ImageView(createColorBar(5, side));
+    colorBar = new ImageView(createColorBar(5, fit));
     distanceBox.getChildren().add(colorBar);
     ticks = new NumberAxis(0, 25 * ((int) currentSequenceMaxDist / 25 + 1), 25);
     ticks.setSide(Side.RIGHT);
@@ -539,7 +545,13 @@ public class Controller {
       for (int j = 0; j < i; j++) {
         // only run on bottom triangle
         double value = adjMatrix[i][j];
-        distanceMapWriter.setColor(j, i, Colors.getColorFromValue(value));
+        for (int k = 0; k < scale; k++) {
+          for (int l = 0; l < scale; l++) {
+            if (i == j) distanceMapWriter.setColor(scale*j + k, scale*i + l, Colors.BLACK);
+            else distanceMapWriter.setColor(scale*j + k, scale*i + l,
+                                            Colors.getColorFromValue(value));
+          }
+        }
       }
     }
   }
