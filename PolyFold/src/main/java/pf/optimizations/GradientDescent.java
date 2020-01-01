@@ -9,7 +9,7 @@ public class GradientDescent {
   public static double stepSize = 0.004;
   public static int iterations = 20000;
   public static final int MIN_ITERS = 5000;
-  public static final int MAX_ITERS = 500000;
+  public static final int MAX_ITERS = 200000;
   public static final double MIN_STEP = 0;
   public static final double MAX_STEP = 0.03;
 

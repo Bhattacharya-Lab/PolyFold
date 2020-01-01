@@ -391,7 +391,7 @@
 }
 
 .gd-slider > #iterSlider {
-  -fx-major-tick-unit: 50;
+  -fx-major-tick-unit: 30;
   -fx-snap-to-ticks: true;
 }
 
