@@ -9,7 +9,7 @@ import static pf.geometry.LinearAlgebra.*;
 import pf.ui.Colors;
 
 public class Residue extends Group {
-  public final double NODE_RADIUS = 0.55;
+  public final double NODE_RADIUS = 0.6;
   public final double ROD_RADIUS = 0.15;
   public final double ROD_HEIGHT = Converter.BOND_LEN;
 

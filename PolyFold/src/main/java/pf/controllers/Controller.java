@@ -434,7 +434,7 @@ public class Controller {
   public static double currentSequenceMaxDist;
   public static final double DISTANCE_THRESHOLD = 100;
   public static final int DISTANCE_MAP_MIN_SIZE = 180;
-  public static final int DISTANCE_MAP_MAX_SIZE = 280;
+  public static final int DISTANCE_MAP_MAX_SIZE = 260;
 
   public void generateDistanceMap() {
     currentSequenceMaxDist = 0.0;
