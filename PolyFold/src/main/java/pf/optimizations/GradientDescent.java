@@ -17,10 +17,9 @@ public class GradientDescent {
     carts = new Cartesian[state.length];
     for (int i = 0; i < state.length; i++) carts[i] = new Cartesian(state[i]);
     for (int i = 0; i < carts.length; i++) {
-      double[] gradient = {0, 0, 0};
+      double[] prev = {0, 0, 0};
       for (int j = i+1; j < carts.length; j++) {
-        double[] prev = gradient;
-        gradient = getGradient(i, j);
+        double[] gradient = getGradient(i, j);
         gradient = vectorAdd(prev, gradient);
         applyGradient(j, gradient);
       }
