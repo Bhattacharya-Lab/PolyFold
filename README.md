@@ -15,9 +15,6 @@ entirely with human intuition in mind.
 
 It is extremely important that you use the correct version of Java in order for PolyFold to function properly. PolyFold is designed for long term support and thus runs on Java 11. The Java 11 JDK and JRE can be downloaded at https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
 
-### Using Make
-1. Run the following line to compile the code:
-=======
 ### Using Maven
 #### Mac OS
 1. If you do not have homebrew installed, you can install it with
