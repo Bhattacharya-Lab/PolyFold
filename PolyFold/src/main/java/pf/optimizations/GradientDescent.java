@@ -49,7 +49,7 @@ public class GradientDescent {
   }
 
   public static double piecewisePartial4(double k, double dist) {
-    return 2 * k / dist;
+    return k / dist;
   }
 
   public static double[] getGradient(int i, int j) {
@@ -64,7 +64,7 @@ public class GradientDescent {
       return new double[]{delX, delY, delZ};
     } else if (dist >= floor && dist <= ceil) {
       return new double[]{0.0, 0.0, 0.0};
-    } else if (dist > ceil + 0.5) {
+    } else if (dist > ceil && dist <= ceil + 0.5) {
       double delX = piecewisePartial3(p.x, ceil, dist);
       double delY = piecewisePartial3(p.y, ceil, dist);
       double delZ = piecewisePartial3(p.z, ceil, dist);

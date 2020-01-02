@@ -592,20 +592,16 @@ public class Controller {
   }
 
   public void gradientDescent() {
-    carts = Converter.residuesToCarts(residues);
+    carts = Converter.anglesToCarts(angles);
     for (int i = 0; i <= GradientDescent.iterations; i++) {
       if (killOptimization) break;
       carts = GradientDescent.getNextState(carts);
-      if (i % gd_update_rate == 0) {
+      if (i % gd_update_rate == 0 || i == GradientDescent.iterations) {
         final Angular[] tmpAngles = Converter.cartsToAngles(carts);
         Platform.runLater(()-> updateStructure(tmpAngles));
       }
     }
-    angles = Converter.cartsToAngles(carts);
-    Platform.runLater(() -> {
-      updateStructure(angles);
-      if (!killOptimization) showOptimizationComplete();
-    });
+    if (!killOptimization) Platform.runLater(() -> showOptimizationComplete());
   }
 
   public void updateStructure(Angular[] update) {

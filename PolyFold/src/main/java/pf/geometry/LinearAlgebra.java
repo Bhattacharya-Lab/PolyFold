@@ -75,7 +75,7 @@ public class LinearAlgebra {
     Point m = crossProduct(n1, unitVector(v));
     double x = dotProduct(n1, n2);
     double y = dotProduct(m, n2);
-    return atan2(y, x);
+    return -atan2(y, x);
   }
 
   public static double determinant(Point[] M) {

@@ -1,0 +1,2 @@
+JAVA_VERSION="11.0.5"
+MODULES="java.base java.datatransfer java.xml java.prefs java.desktop javafx.base jdk.unsupported javafx.graphics javafx.controls java.scripting javafx.fxml javafx.swing PolyFold"
