@@ -15,10 +15,9 @@ public class RRUtils {
     aminoSequence = br.readLine();
     // Do not work on files with no sequence
     if (aminoSequence == null || aminoSequence.length() == 0) return 1;
+    aminoSequence = aminoSequence.trim();
     if (aminoSequence.length() > 500) return 2;
     secondarySequence = br.readLine();
-    // Trim sequences
-    aminoSequence = aminoSequence.trim();
     if (secondarySequence != null) secondarySequence = secondarySequence.trim();
     if (secondarySequence.length() != aminoSequence.length()) return 1;
     // Side length of matrix
