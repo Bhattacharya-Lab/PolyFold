@@ -57,6 +57,7 @@ public class Controller {
     residues = null;
     sequence.getChildren().clear();
     world.getChildren().clear();
+    History.clear();
     hideProteinMovementUI();
     showSplash();
   }
