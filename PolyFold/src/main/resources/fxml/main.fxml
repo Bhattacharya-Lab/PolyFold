@@ -106,7 +106,7 @@
           <Menu text="Configure">
             <MenuItem onAction="#showConfigureGradientDescent" 
                       text="Gradient Descent"/>
-            <MenuItem onAction="#showConfigureMonteCarlo" text="Monte Carlo"/>
+            <MenuItem onAction="#showConfigureMonteCarlo" text="Simulated Annealing"/>
           </Menu>
           <Menu text="Help">
             <MenuItem onAction="#showAbout" text="About"/>
@@ -136,7 +136,7 @@
             </Button>
             <Button fx:id="monteCarloBtn" onAction="#startMonteCarlo"
                     styleClass="mcButton">
-              <tooltip><Tooltip text="Monte Carlo"/></tooltip>
+              <tooltip><Tooltip text="Simulated Annealing"/></tooltip>
             </Button>
             <Button fx:id="undoBtn" onAction="#undo" styleClass="undoButton">
               <tooltip><Tooltip text="Undo"/></tooltip>

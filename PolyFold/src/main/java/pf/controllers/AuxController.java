@@ -195,8 +195,8 @@ public class AuxController {
     });
     // Build scene
     mcConfigStage = new Stage();
-    mcConfigStage.setTitle("Monte Carlo");
-    Scene scene = new Scene(root, 450, 454);
+    mcConfigStage.setTitle("Simulated Annealing");
+    Scene scene = new Scene(root, 460, 454);
     scene.getStylesheets().add("/style.css");
     mcConfigStage.setScene(scene);
     mcConfigStage.setResizable(false);
@@ -249,7 +249,7 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/recover_lowest.fxml");
     recoverLowestStage = new Stage();
-    recoverLowestStage.setTitle("Monte Carlo");
+    recoverLowestStage.setTitle("Simulated Annealing");
     Scene scene = new Scene(root, 450, 152);
     scene.getStylesheets().add("/style.css");
     recoverLowestStage.setScene(scene);

@@ -13,7 +13,7 @@
   <top>
     <HBox>
       <VBox>
-        <Label styleClass="alert-header" text="Monte Carlo Configuration"/>
+        <Label styleClass="alert-header" text="Simulated Annealing Configuration"/>
       </VBox>
       <VBox styleClass="alert-graphic">
         <ImageView styleClass="gear-img"></ImageView>

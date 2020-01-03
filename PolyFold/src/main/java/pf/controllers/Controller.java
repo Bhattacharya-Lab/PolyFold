@@ -124,8 +124,8 @@ public class Controller {
   public static SubScene subscene;
   public static Group world = new Group();
   public static Group sequence = new Group();
-  public int gd_update_rate; // adapative
-  public final int MC_UPDATE_RATE = 8;
+  public int gd_update_rate;
+  public int mc_update_rate;
   // Residue representation related fields;
   public static Residue[] residues;
   public static Angular[] angles;
@@ -623,6 +623,7 @@ public class Controller {
 
   public void startMonteCarlo() {
     if (residues == null) return;
+    mc_update_rate = (RRUtils.sequenceLen > 200) ? 5 : 8;
     History.addUndoState(angles);
     disableSliders();
     resetResidueLabels();
@@ -647,7 +648,7 @@ public class Controller {
       if (killOptimization) break;
       MonteCarlo.setTemperature(i);
       angles = MonteCarlo.getNextState(angles);
-      if (i % MC_UPDATE_RATE == 0) {
+      if (i % mc_update_rate == 0) {
         final Angular[] tmpAngles = Converter.angularCopy(angles);
         Platform.runLater(() -> updateStructure(tmpAngles));
       }
