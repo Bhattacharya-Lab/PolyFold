@@ -21,11 +21,13 @@ public class RRUtils {
     if (secondarySequence != null) secondarySequence = secondarySequence.trim();
     if (secondarySequence.length() != aminoSequence.length()) return 1;
     // Side length of matrix
+    int numLines = 0;
     sequenceLen = aminoSequence.length();
     expectedDistance = new double[sequenceLen][sequenceLen];
     Scoring.contactTable = new double[sequenceLen][sequenceLen][3];
     String currentLine = br.readLine();
     while (currentLine != null) {
+      numLines++;
       String[] data = currentLine.split(" ");
       int residue1 = Integer.parseInt(data[0]) - 1;
       int residue2 = Integer.parseInt(data[1]) - 1;
@@ -39,6 +41,7 @@ public class RRUtils {
           (Double.parseDouble(data[2]) + Double.parseDouble(data[3])) / 2.0);
       currentLine = br.readLine();
     }
+    if (numLines != sequenceLen * sequenceLen) return 1;
     br.close();
     return 0;
   }
