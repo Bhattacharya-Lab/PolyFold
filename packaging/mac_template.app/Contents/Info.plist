@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleExecutable</key>
+    <string>polyfold</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright © 2020-2030 Bhattacharya Lab.  All Rights Reserved.</string>
+    <key>CFBundleIconFile</key>
+    <string>polyfold.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>edu.auburn.bhattacharyalab.polyfold</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>PolyFold</string>
+    <key>CFBundleDisplayName</key>
+    <string>PolyFold</string>
+    <key>LSHasLocalizedDisplayName</key>
+    <false/>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>LSBackgroundOnly</key>
+    <false/>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.11.0</string>
+</dict>
+</plist>

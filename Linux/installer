@@ -9,4 +9,3 @@ mv ./PolyFold /usr/local/opt
 echo "Creating symlink 'polyfold' in /usr/local/bin..."
 sudo ln -s /usr/local/opt/PolyFold/PolyFold/bin/launcher /usr/local/bin/polyfold
 echo "Done"
-

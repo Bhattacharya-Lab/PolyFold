@@ -1,0 +1,4 @@
+#!/bin/sh
+JLINK_VM_OPTIONS=
+DIR="$(dirname $0)/../bin"
+$DIR/java -Xdock:name="PolyFold" -Xdock:icon="$(dirname $0)/../Resources/polyfold.icns" $JLINK_VM_OPTIONS -m PolyFold/pf.PolyFold

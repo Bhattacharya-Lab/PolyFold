@@ -1,0 +1,4 @@
+#!/bin/sh
+JLINK_VM_OPTIONS=
+DIR=/usr/local/opt/PolyFold/PolyFold/bin
+$DIR/java $JLINK_VM_OPTIONS -m PolyFold/pf.PolyFold
