@@ -60,7 +60,7 @@ $ export PATH=$M2:$PATH
 $ mvn -v
 ```
 4. Change into the PolyFold directory which should contain `pom.xml`
-5. Compile
+5. Compile. If lots of text litters your terminal screen don't panic! Maven may need to download supplementary files here.
 ```
 $ mvn clean javafx:jlink
 ```
