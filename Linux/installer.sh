@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+sudo mkdir -p /usr/local/opt
+sudo mkdir -p /usr/local/bin
+
+echo "Extracting..."
+tar -xzf PolyFold.tgz
+echo "Installing in /usr/local/opt..."
+mv ./PolyFold /usr/local/opt
+echo "Creating symlink 'polyfold' in /usr/local/bin..."
+sudo ln -s /usr/local/opt/PolyFold/PolyFold/bin/launcher /usr/local/bin/polyfold
+echo "Done"
+
