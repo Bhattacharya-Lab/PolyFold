@@ -486,7 +486,7 @@ public class Controller {
         double value = adjMatrix[i][j];
         for (int k = 0; k < scale; k++) {
           for (int l = 0; l < scale; l++) {
-            if (i == j) distanceMapWriter.setColor(scale*j+k, scale*i+l, Colors.BLACK);
+            if (i == j) distanceMapWriter.setColor(scale*j + k, scale*i + l, Colors.BLACK);
             else distanceMapWriter.setColor(scale*j + k, scale*i + l,
                                             Colors.getColorFromValue(value));
           }
