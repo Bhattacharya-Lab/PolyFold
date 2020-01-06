@@ -380,9 +380,7 @@ public class Controller {
         if (id != 0 && id != angles.length-1) {
           thetaDegreeText.setText(df.format(toDegrees(thetaSlider.getValue())) + "\u00b0");
           angles[id].theta = end.doubleValue();
-          History.setCurrentState(angles);
-          residues = updateResidues(id);
-          buildSequence();
+          updateStructure(angles);
         }
       }
     });
@@ -394,9 +392,7 @@ public class Controller {
         if (id != 0 && id != angles.length-2 && id != angles.length-1) {
           taoDegreeText.setText(df.format(toDegrees(taoSlider.getValue())) + "\u00b0");
           angles[id].tao = end.doubleValue();
-          History.setCurrentState(angles);
-          residues = updateResidues(id);
-          buildSequence();
+          updateStructure(angles);
         }
       }
     });
@@ -576,6 +572,7 @@ public class Controller {
     gd_update_rate = max(16, (int) (256 / Math.pow(2, RRUtils.sequenceLen / 100.0)));
     History.addUndoState(angles);
     disableSliders();
+    deselect(selectedResidue);
     resetResidueLabels();
     unsetKillOptimization();
     Thread thread = new Thread(() -> {
@@ -606,7 +603,9 @@ public class Controller {
 
   public void updateStructure(Angular[] update) {
     for (int i = 0; i < update.length; i++) angles[i] = new Angular(update[i]);
-    residues = updateResidues(-1);
+    int selectedIndex = -1;
+    if (selectedResidue != null) selectedIndex = selectedResidue.id;
+    residues = updateResidues(selectedIndex);
     buildSequence();
     updateScore();
     History.setCurrentState(angles);
@@ -626,6 +625,7 @@ public class Controller {
     mc_update_rate = (RRUtils.sequenceLen > 200) ? 5 : 8;
     History.addUndoState(angles);
     disableSliders();
+    deselect(selectedResidue);
     resetResidueLabels();
     unsetKillOptimization();
     Thread thread = new Thread(() -> {
