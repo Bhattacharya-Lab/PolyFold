@@ -12,3 +12,4 @@ echo "Zipping..."
 zip -qr ../Mac/PolyFold.zip ../Mac/PolyFold.app
 echo "Cleaning up..."
 rm -rf ../Mac/PolyFold.app
+echo "Done"

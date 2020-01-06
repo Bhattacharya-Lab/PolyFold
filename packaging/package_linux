@@ -11,6 +11,7 @@ echo "Updating launcher script..."
 rm ../Linux/PolyFold/PolyFold/bin/launcher
 cp ./linux_launcher ../Linux/PolyFold/PolyFold/bin/launcher
 echo "Creating tar ball..."
-tar -czf ../Linux/PolyFold.tgz ../Linux/PolyFold
+tar -czf ../Linux/PolyFold.tgz ../Linux/PolyFold 2>/dev/null
 echo "Cleaning up..."
 rm -rf ../Linux/PolyFold
+echo "Done"
