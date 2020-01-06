@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 echo "Packaging Linux..."
+echo "Clearing old package..."
+rm ../Linux/PolyFold.tgz
 echo "Creating root directory..."
 mkdir -p ../Linux/PolyFold
 echo "Copying target sub-directories..."
