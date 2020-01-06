@@ -54,7 +54,7 @@
   -fx-padding: 6;
   -fx-spacing: 6;
   -fx-alignment: top-center;
-  -fx-pref-height: 1000;
+  -fx-pref-height: 5000;
 }
 
 .tooltip {
@@ -279,19 +279,19 @@
 
 #rightTools {
   -fx-alignment: center-right;
-  -fx-pref-width: 1000;
+  -fx-pref-width: 3000;
   -fx-spacing: 6px;
 }
 
 #middleTools {
   -fx-alignment: center;
-  -fx-pred-width: 1000;
+  -fx-pred-width: 3000;
   -fx-spacing: 6px;
 }
 
 #leftTools {
   -fx-alignment: center-left;
-  -fx-pref-width: 1000;
+  -fx-pref-width: 3000;
   -fx-spacing: 6px;
 }
 

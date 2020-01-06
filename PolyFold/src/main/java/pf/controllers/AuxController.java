@@ -59,7 +59,7 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/about.fxml");
     aboutStage = new Stage();
-    Scene scene = new Scene(root, 512, 256);
+    Scene scene = new Scene(root, 600, 256);
     scene.getStylesheets().add("/style.css");
     aboutStage.setTitle("About");
     aboutStage.setScene(scene);
@@ -75,18 +75,40 @@ public class AuxController {
 
   /* Save GNU public license to file */
   public void handleLicense(Scene scene) {
-    try {
+    if (System.getProperty("os.name").equals("Linux")) {
+      Runtime rt = Runtime.getRuntime();
+      try {
+        rt.exec("xdg-open https://gnu.org/licenses/#GPL");
+      } catch (Exception exc) { exc.printStackTrace(); }
+    } else if (Desktop.isDesktopSupported()) {
       Desktop d = Desktop.getDesktop();
-      d.browse(new URI("https://gnu.org/licenses/#GPL"));
-    } catch (Exception exc) { exc.printStackTrace(); }
+      if (d.isSupported(Desktop.Action.BROWSE)) {
+        System.out.println("supported");
+        try {
+          d.browse(new URI("https://gnu.org/licenses/#GPL"));
+          return;
+        } catch (Exception exc) { exc.printStackTrace(); }
+      }
+    }
   }
 
   /* Open PolyFold website in browser */
   public void handleWebsite() {
-    try {
+    if (System.getProperty("os.name").equals("Linux")) {
+      Runtime rt = Runtime.getRuntime();
+      try {
+        rt.exec("xdg-open https://github.com/Bhattacharya-Lab/PolyFold");
+      } catch (Exception exc) { exc.printStackTrace(); }
+    } else if (Desktop.isDesktopSupported()) {
       Desktop d = Desktop.getDesktop();
-      d.browse(new URI("https://github.com/Bhattacharya-Lab/PolyFold"));
-    } catch (Exception exc) { exc.printStackTrace(); }
+      if (d.isSupported(Desktop.Action.BROWSE)) {
+        System.out.println("supported");
+        try {
+          d.browse(new URI("https://github.com/Bhattacharya-Lab/PolyFold"));
+          return;
+        } catch (Exception exc) { exc.printStackTrace(); }
+      }
+    }
   }
 
   // Fields for optimization completion alert life cycle
@@ -100,7 +122,7 @@ public class AuxController {
     }
     Parent root = loadFXML("/fxml/optimization_complete.fxml");
     optCompleteStage = new Stage();
-    Scene scene = new Scene(root, 350, 150);
+    Scene scene = new Scene(root, 380, 150);
     scene.getStylesheets().add("/style.css");
     optCompleteStage.setScene(scene);
     optCompleteStage.setResizable(false);
@@ -139,7 +161,7 @@ public class AuxController {
     // Build scene
     gdConfigStage = new Stage();
     gdConfigStage.setTitle("Gradient Descent");
-    Scene scene = new Scene(root, 450, 310);
+    Scene scene = new Scene(root, 550, 310);
     scene.getStylesheets().add("/style.css");
     gdConfigStage.setScene(scene);
     gdConfigStage.setResizable(false);
@@ -196,7 +218,7 @@ public class AuxController {
     // Build scene
     mcConfigStage = new Stage();
     mcConfigStage.setTitle("Simulated Annealing");
-    Scene scene = new Scene(root, 460, 454);
+    Scene scene = new Scene(root, 560, 454);
     scene.getStylesheets().add("/style.css");
     mcConfigStage.setScene(scene);
     mcConfigStage.setResizable(false);
@@ -287,7 +309,7 @@ public class AuxController {
       return;
     }
     Parent root = loadFXML("/fxml/save_state.fxml");
-    Scene scene = new Scene(root, 300, 192);
+    Scene scene = new Scene(root, 400, 192);
     scene.getStylesheets().add("/style.css");
     saveStateStage = new Stage();
     saveStateStage.setScene(scene);
