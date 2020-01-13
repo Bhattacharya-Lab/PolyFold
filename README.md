@@ -14,11 +14,9 @@ entirely with human intuition in mind.
 ## Dataset
 PolyFold includes with it a set of 15 curated Residue-Residue files for small protein targets. Each gif below is a visualization of the interaction map for one of these proteins as it is optimized. They each also link to the Residue-Residue files for download. 
 
-<p align="middle">
-  <img src="Assets/1aapA.gif" height="200"/>
-  <img src="Assets/1atzA.gif" height="200"/>
-  <img src="Assets/1brfA.gif" height="200"/>
-</p>
+
+<img src="Assets/1aapA.gif" height="200"/> | <img src="Assets/1atzA.gif" height="200"/> | <img src="Assets/1brfA.gif" height="200"/>
+1aapA | 1atzA | 1brfA
 <p align="middle">
   <img src="Assets/1c9oA.gif" height="200"/>
   <img src="Assets/1cc8A.gif" height="200"/>
