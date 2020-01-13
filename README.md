@@ -18,26 +18,14 @@ PolyFold includes with it a set of 15 curated Residue-Residue files for small pr
 <img src="Assets/1aapA.gif" height="200"/> | <img src="Assets/1atzA.gif" height="200"/> | <img src="Assets/1brfA.gif" height="200"/>
 :-: | :-: | :-:
 1aapA | 1atzA | 1brfA
-<p align="middle">
-  <img src="Assets/1c9oA.gif" height="200"/>
-  <img src="Assets/1cc8A.gif" height="200"/>
-  <img src="Assets/1ctfA.gif" height="200"/>
-</p>
-<p align="middle">
-  <img src="Assets/1guuA.gif" height="200"/>
-  <img src="Assets/1h98A.gif" height="200"/>
-  <img src="Assets/1jo8A.gif" height="200"/>
-</p>
-<p align="middle">
-  <img src="Assets/1ku3A.gif" height="200"/>
-  <img src="Assets/1kw4A.gif" height="200"/>
-  <img src="Assets/1m8aA.gif" height="200"/>
-</p>
-<p align="middle">
-  <img src="Assets/1t8kA.gif" height="200"/>
-  <img src="Assets/1tifA.gif" height="200"/>
-  <img src="Assets/1vfyA.gif" height="200"/>
-</p>
+<img src="Assets/1c9oA.gif" height="200"/> | <img src="Assets/1cc8A.gif" height="200"/> | <img src="Assets/1ctfA.gif" height="200"/>
+1c9oA | 1cc8A | 1ctfA
+<img src="Assets/1guuA.gif" height="200"/> | <img src="Assets/1h98A.gif" height="200"/> | <img src="Assets/1jo8A.gif" height="200"/>
+1guuA | 1h98A | 1jo8A
+<img src="Assets/1ku3A.gif" height="200"/> | <img src="Assets/1kw4A.gif" height="200"/> | <img src="Assets/1m8aA.gif" height="200"/>
+1ku3A | 1kw4A | 1m8aA
+<img src="Assets/1t8kA.gif" height="200"/> | <img src="Assets/1tifA.gif" height="200"/> | <img src="Assets/1vfyA.gif" height="200"/>
+1t8kA | 1tifA | 1vfyA
 
 ## How to Compile and Run the Source Code
 
