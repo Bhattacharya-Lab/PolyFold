@@ -15,6 +15,34 @@ entirely with human intuition in mind.
 
 It is extremely important that you use the correct version of Java in order for PolyFold to function properly. PolyFold is designed for long term support and thus runs on Java 11. The Java 11 JDK and JRE can be downloaded at https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
 
+### Environment Variables
+PolyFold depends on two environment variables in order to function properly - JAVA_HOME and JAVAFX_HOME. 
+
+The JAVA_HOME variable needs to point to your installation of Java 11. More specifically it needs to point to the parent directory of the `bin` directory. On my Mac, this directory happens to be:
+```
+/Library/Java/JavaVirtualMachines/jdk-11.0.5.jdk/Contents/Home
+```
+On my Debian machine, this directory happens to be:
+```
+/usr/lib/jvm/jdk-11.0.5
+```
+
+The JAVAFX_HOME variable needs to point to your JavaFX installation. More specifically, it points to the `lib` directory within your JavaFX installation. On my Mac, this directory happens to be:
+```
+/Library/Java/JavaFX/javafx-sdk-11.0.2/lib
+```
+On my Debian machine, this directory happens to be:
+```
+/usr/lib/jvm/javafx-sdk-11.0.2/lib
+```
+
+So, in my case, in order to set the proper environment variables on my Mac, I have added the following to the RC file for my shell:
+```
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.5.jdk/Contents/Home
+export JAVAFX_HOME=/Library/Java/JavaFX/javafx-sdk-11.0.2/lib
+```
+NOTE: all the above listed directories could vary on your own machine. 
+
 ### Using Maven
 #### Mac OS
 1. If you do not have homebrew installed, you can install it with
