@@ -15,16 +15,16 @@ entirely with human intuition in mind.
 PolyFold includes with it a set of 15 curated Residue-Residue files for small protein targets. Each gif below is a visualization of the interaction map for one of these proteins as it is optimized. They each also link to the Residue-Residue files for download. 
 
 
-<img src="Assets/1aapA.gif" height="200"/> | <img src="Assets/1atzA.gif" height="200"/> | <img src="Assets/1brfA.gif" height="200"/>
+<a href="Dataset/1aapA.rr"><img src="Assets/1aapA.gif" height="200"/></a> | <a href=""><img src="Assets/1atzA.gif" height="200"/></a> | <a href=""><img src="Assets/1brfA.gif" height="200"/></a>
 :-: | :-: | :-:
 1aapA | 1atzA | 1brfA
-<img src="Assets/1c9oA.gif" height="200"/> | <img src="Assets/1cc8A.gif" height="200"/> | <img src="Assets/1ctfA.gif" height="200"/>
+<a href=""><img src="Assets/1c9oA.gif" height="200"/></a> | <a href=""><img src="Assets/1cc8A.gif" height="200"/></a> | <a href=""><img src="Assets/1ctfA.gif" height="200"/></a>
 1c9oA | 1cc8A | 1ctfA
-<img src="Assets/1guuA.gif" height="200"/> | <img src="Assets/1h98A.gif" height="200"/> | <img src="Assets/1jo8A.gif" height="200"/>
+<a href=""><img src="Assets/1guuA.gif" height="200"/></a> | <a href=""><img src="Assets/1h98A.gif" height="200"/></a> | <a href=""><img src="Assets/1jo8A.gif" height="200"/></a>
 1guuA | 1h98A | 1jo8A
-<img src="Assets/1ku3A.gif" height="200"/> | <img src="Assets/1kw4A.gif" height="200"/> | <img src="Assets/1m8aA.gif" height="200"/>
+<a href=""><img src="Assets/1ku3A.gif" height="200"/></a> | <a href=""><img src="Assets/1kw4A.gif" height="200"/></a> | <a href=""><img src="Assets/1m8aA.gif" height="200"/></a>
 1ku3A | 1kw4A | 1m8aA
-<img src="Assets/1t8kA.gif" height="200"/> | <img src="Assets/1tifA.gif" height="200"/> | <img src="Assets/1vfyA.gif" height="200"/>
+<a href=""><img src="Assets/1t8kA.gif" height="200"/></a> | <a href=""><img src="Assets/1tifA.gif" height="200"/></a> | <a href=""><img src="Assets/1vfyA.gif" height="200"/></a>
 1t8kA | 1tifA | 1vfyA
 
 ## How to Compile and Run the Source Code
