@@ -1,4 +1,4 @@
-![polyfold](Assets/logo.png)
+![polyfold](./Assets/logo.png)
 
 PolyFold is an interactive visual simulator for distance-based protein folding
 dynamics. The goal of PolyFold is to give citizen scientists and academic
