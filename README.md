@@ -16,6 +16,7 @@ PolyFold includes with it a set of 15 curated Residue-Residue files for small pr
 
 
 <img src="Assets/1aapA.gif" height="200"/> | <img src="Assets/1atzA.gif" height="200"/> | <img src="Assets/1brfA.gif" height="200"/>
+:-: | :-: | :-:
 1aapA | 1atzA | 1brfA
 <p align="middle">
   <img src="Assets/1c9oA.gif" height="200"/>
