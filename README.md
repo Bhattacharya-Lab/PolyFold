@@ -12,7 +12,7 @@ No prior scientific background is needed to work with PolyFold. It is built
 entirely with human intuition in mind.
 
 ## Dataset
-PolyFold includes with it a set of 15 curated Residue-Residue files for small protein targets. Each gif below is a visualization of the interaction map for one of these proteins as it is optimized. They each also link to the Residue-Residue files for download. 
+PolyFold's source code includes with it a set of 15 curated Residue-Residue files for small protein targets. Each gif below is a visualization of the interaction map for one of these proteins as it is optimized. They each also link to the Residue-Residue files for download. 
 
 
 <a href="Dataset/1aapA.rr"><img src="Assets/1aapA.gif" height="200"/></a> | <a href="Dataset/1atzA.rr"><img src="Assets/1atzA.gif" height="200"/></a> | <a href="Dataset/1brfA.rr"><img src="Assets/1brfA.gif" height="200"/></a>
