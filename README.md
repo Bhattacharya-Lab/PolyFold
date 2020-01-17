@@ -15,14 +15,14 @@ entirely with human intuition in mind.
 PolyFold's source code includes with it a set of 15 curated Residue-Residue files for small protein targets. Each gif below is a visualization of the interaction map for one of these proteins as it is optimized. They each also link to the Residue-Residue files for download. 
 
 
-<a href="Dataset/1a3aA.rr"><img src="Assets/1a3aA.gif" height="120"/></a> | <a href="Dataset/1aapA.rr"><img src="Assets/1aapA.gif" height="120"/></a> | <a href="Dataset/1atzA.rr"><img src="Assets/1atzA.gif" height="120"/></a> | <a href="Dataset/1brfA.rr"><img src="Assets/1brfA.gif" height="120"/></a> | <a href="Dataset/1c9oA.rr"><img src="Assets/1c9oA.gif" height="120"/></a>
+<a href="Dataset/1a3aA.rr"><img src="Assets/1a3aA.gif" height="150"/></a> | <a href="Dataset/1aapA.rr"><img src="Assets/1aapA.gif" height="150"/></a> | <a href="Dataset/1atzA.rr"><img src="Assets/1atzA.gif" height="150"/></a> | <a href="Dataset/1brfA.rr"><img src="Assets/1brfA.gif" height="150"/></a> | <a href="Dataset/1c9oA.rr"><img src="Assets/1c9oA.gif" height="150"/></a>
  :-: | :-: | :-: | :-: | :-:
 1a3aA | 1aapA | 1atzA | 1brfA | 1c9oA
-<a href="Dataset/1cc8A.rr"><img src="Assets/1cc8A.gif" height="120"/></a> | <a href="Dataset/1ctfA.rr"><img src="Assets/1ctfA.gif" height="120"/></a> | <a href="Dataset/1guuA.rr"><img src="Assets/1guuA.gif" height="120"/></a> | <a href="Dataset/1h98A.rr"><img src="Assets/1h98A.gif" height="120"/></a> | <a href="Dataset/1jo8A.rr"><img src="Assets/1jo8A.gif" height="120"/></a>
+<a href="Dataset/1cc8A.rr"><img src="Assets/1cc8A.gif" height="150"/></a> | <a href="Dataset/1ctfA.rr"><img src="Assets/1ctfA.gif" height="150"/></a> | <a href="Dataset/1guuA.rr"><img src="Assets/1guuA.gif" height="150"/></a> | <a href="Dataset/1h98A.rr"><img src="Assets/1h98A.gif" height="150"/></a> | <a href="Dataset/1jo8A.rr"><img src="Assets/1jo8A.gif" height="150"/></a>
 1cc8A | 1ctfA | 1guuA | 1h98A | 1jo8A
-<a href="Dataset/1ku3A.rr"><img src="Assets/1ku3A.gif" height="120"/></a> | <a href="Dataset/1kw4A.rr"><img src="Assets/1kw4A.gif" height="120"/></a> | <a href="Dataset/1m8aA.rr"><img src="Assets/1m8aA.gif" height="120"/></a> | <a href="Dataset/1t8kA.rr"><img src="Assets/1t8kA.gif" height="120"/></a> | <a href="Dataset/1tifA.rr"><img src="Assets/1tifA.gif" height="120"/></a>
+<a href="Dataset/1ku3A.rr"><img src="Assets/1ku3A.gif" height="150"/></a> | <a href="Dataset/1kw4A.rr"><img src="Assets/1kw4A.gif" height="150"/></a> | <a href="Dataset/1m8aA.rr"><img src="Assets/1m8aA.gif" height="150"/></a> | <a href="Dataset/1t8kA.rr"><img src="Assets/1t8kA.gif" height="150"/></a> | <a href="Dataset/1tifA.rr"><img src="Assets/1tifA.gif" height="150"/></a>
 1ku3A | 1kw4A | 1m8aA | 1t8kA | 1tifA
-<a href="Dataset/1vfyA.rr"><img src="Assets/1vfyA.gif" height="120"/></a> | <a href="Dataset/1xdzA.rr"><img src="Assets/1xdzA.gif" height="120"/></a> | <a href="Dataset/T0864.rr"><img src="Assets/T0864.gif" height="120"/></a>
+<a href="Dataset/1vfyA.rr"><img src="Assets/1vfyA.gif" height="150"/></a> | <a href="Dataset/1xdzA.rr"><img src="Assets/1xdzA.gif" height="150"/></a> | <a href="Dataset/T0864.rr"><img src="Assets/T0864.gif" height="150"/></a>
 1vfyA | 1xdzA | T0864
 
 ## How to Compile and Run the Source Code
