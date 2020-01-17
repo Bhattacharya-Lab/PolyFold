@@ -27,8 +27,8 @@ PolyFold's source code includes with it a set of 20 curated Residue-Residue file
 1cc8A (72) | 1ctfA (68) | 1guuA (50) | 1h98A (77) | 1jo8A (58)
 <a href="Dataset/1ku3A.rr"><img src="Assets/1ku3A.gif" height="150"/></a> | <a href="Dataset/1kw4A.rr"><img src="Assets/1kw4A.gif" height="150"/></a> | <a href="Dataset/1m8aA.rr"><img src="Assets/1m8aA.gif" height="150"/></a> | <a href="Dataset/1t8kA.rr"><img src="Assets/1t8kA.gif" height="150"/></a> | <a href="Dataset/1tifA.rr"><img src="Assets/1tifA.gif" height="150"/></a>
 1ku3A (61) | 1kw4A (70) | 1m8aA (61) | 1t8kA (77) | 1tifA (76)
-<a href="Dataset/1vfyA.rr"><img src="Assets/1vfyA.gif" height="150"/></a> | <a href="Dataset/1xdzA.rr"><img src="Assets/1xdzA.gif" height="150"/></a> | <a href="Dataset/T0864.rr"><img src="Assets/T0864.gif" height="150"/></a>
-1vfyA (67) | 1xdzA (238) | T0864 (246)
+<a href="Dataset/1vfyA.rr"><img src="Assets/1vfyA.gif" height="150"/></a> | <a href="Dataset/1xdzA.rr"><img src="Assets/1xdzA.gif" height="150"/></a> | <a href="Dataset/T0864.rr"><img src="Assets/T0864.gif" height="150"/></a> | <a href="Dataset/T0950.rr"><img src="Assets/T0950.gif" height="150"/></a> | <a href="Dataset/T0966.rr"><img src="Assets/T0966.gif" height="150"/></a>
+1vfyA (67) | 1xdzA (238) | T0864 (246) | T0950 (342) | T0966 (492)
 
 ## How to Compile and Run the Source Code
 
