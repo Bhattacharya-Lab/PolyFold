@@ -11,7 +11,10 @@ certain types of proteins respond to certain types of optimization strategies.
 No prior scientific background is needed to work with PolyFold. It is built
 entirely with human intuition in mind.
 
-![gradient descent](Assets/gd.gif)
+<img src='Assets/gd.gif' width='100%'/>
+<p align='center'>
+<em>PolyFold optimizes target T0864 via its Batch Gradient Descent feature</em>
+</p>
 
 ## Dataset
 PolyFold's source code includes with it a set of 20 curated Residue-Residue files for various sized protein targets. Each entry in the table below contains a GIF visualization of the interaction map for one of these proteins as it is optimized. Each GIF has a label below it with the protein's name and the number of residues in that protein in parenthesis. All GIFs also link to the raw text Residue-Residue file for download for their respective protein. 
