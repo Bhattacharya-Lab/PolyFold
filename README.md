@@ -13,7 +13,7 @@ entirely with human intuition in mind.
 
 <img src='Assets/gd.gif' width='100%'/>
 <p align='center'>
-<em>PolyFold optimizes target T0864 via its Batch Gradient Descent feature</em>
+<em>PolyFold optimizes target T0864 in real-time via its Batch Gradient Descent feature</em>
 </p>
 
 ## Dataset
