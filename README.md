@@ -112,4 +112,4 @@ If you wish to install PolyFold on Windows it is recommended that you do so on a
 Plugins > JavaFX > javafx:jlink
 ```
 5. Double click on `javafx:jlink`. This will trigger the build process.
-6. Run `target/PolyFold/bin/launcher.bat` to launch PolyFold
+6. Run `target\PolyFold\bin\launcher.bat` to launch PolyFold
