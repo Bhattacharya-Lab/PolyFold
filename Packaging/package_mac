@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 echo "Packaging Mac..."
 echo "Clearing old package..."
-rm ../Mac/PolyFold.zip
+rm ../Mac/PolyFold.tgz
 echo "Moving Mac template..."
 cp -r ./mac_template.app ../Mac/PolyFold.app
 echo "Copying Contents sub-directories..."
@@ -9,7 +9,7 @@ cp -r ../PolyFold/target/PolyFold/* ../Mac/PolyFold.app/Contents
 echo "Copying classes directory..."
 cp -r ../PolyFold/target/classes ../Mac/PolyFold.app
 echo "Zipping..."
-zip -qr ../Mac/PolyFold.zip ../Mac/PolyFold.app
+tar cfz ../Mac/PolyFold.tgz ../Mac/PolyFold.app
 echo "Cleaning up..."
 rm -rf ../Mac/PolyFold.app
 echo "Done"
