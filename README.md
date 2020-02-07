@@ -102,3 +102,14 @@ $ mvn clean javafx:jlink
 ```
 $ ./target/PolyFold/bin/launcher
 ```
+#### Windows
+If you wish to install PolyFold on Windows it is recommended that you do so on a 64 bit Windows 10 installation using the IntelliJ IDE.
+1. Ensure that the Maven plugin suite is installed in IntelliJ.
+2. Open the PolyFold project in IntelliJ (the directory which contains `pom.xml` is the project directory).
+3. Click on the Maven plugin tab on the right-hand side of IntelliJ.
+4. Navigate the directory hierarchy to:
+```
+Plugins > JavaFX > javafx:jlink
+```
+5. Double click on `javafx:jlink`. This will trigger the build process.
+6. Run `target\PolyFold\bin\launcher.bat` to launch PolyFold
