@@ -4,17 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-<<<<<<< HEAD
-    <groupId>bhattacharya-lab</groupId>
-    <artifactId>polyfold</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0</version>
-=======
   <groupId>bhattacharya-lab</groupId>
   <artifactId>polyfold</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
->>>>>>> 7f4ec87b08566f08410454ff34e08d8dc249fc99
+  <version>1.0</version>
 
   <name>PolyFold</name>
 
@@ -42,29 +35,28 @@
     </dependency>
   </dependencies>
 
-<<<<<<< HEAD
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <release>${maven.compiler.release}</release>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.3</version>
-                <configuration>
-                    <release>${maven.compiler.release}</release>
-                    <jlinkImageName>PolyFold</jlinkImageName>
-                    <launcher>launcher</launcher>
-                    <mainClass>pf.Main</mainClass>
-                </configuration>
-            </plugin>
-            <!-- For Windows Build -->
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.1</version>
+              <configuration>
+                  <release>${maven.compiler.release}</release>
+              </configuration>
+          </plugin>
+          <plugin>
+              <groupId>org.openjfx</groupId>
+              <artifactId>javafx-maven-plugin</artifactId>
+              <version>0.0.3</version>
+              <configuration>
+                  <release>${maven.compiler.release}</release>
+                  <jlinkImageName>PolyFold</jlinkImageName>
+                  <launcher>launcher</launcher>
+                  <mainClass>pf.Main</mainClass>
+              </configuration>
+          </plugin>
+          <!-- For Windows Build -->
 <!--            <plugin>-->
 <!--                <artifactId>maven-shade-plugin</artifactId>-->
 <!--                <version>3.2.1</version>-->
@@ -86,29 +78,4 @@
 <!--            </plugin>-->
         </plugins>
     </build>
-=======
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <release>${maven.compiler.release}</release>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.3</version>
-        <configuration>
-          <release>${maven.compiler.release}</release>
-          <jlinkImageName>PolyFold</jlinkImageName>
-          <launcher>launcher</launcher>
-          <mainClass>pf.PolyFold</mainClass>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
->>>>>>> 7f4ec87b08566f08410454ff34e08d8dc249fc99
 </project>
