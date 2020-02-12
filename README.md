@@ -1,19 +1,17 @@
 ![polyfold](Assets/logo.png)
-
-PolyFold is an interactive visual simulator for distance-based protein folding
-dynamics. The goal of PolyFold is to give citizen scientists and academic
-scientists alike an intuitive and visually appealing tool which elucidates the
-process of folding proteins with common machine learning optimization
-techniques in real time. It is the hope of the PolyFold team that this tool will
-serve to fill out the gaps in the user's intuition and understanding of the way
-certain types of proteins respond to certain types of optimization strategies.
+PolyFold is an interactive visual simulator for distance-based protein folding. 
+The goal of PolyFold is to give both researchers as well as non-experts an 
+intuitive and easy-to-use visual interface which elucidates the process of 
+distance-based protein folding. PolyFold embeds powerful stochastic optimization 
+algorithms with on-demand customizations and interactive manipulations in real time 
+to maximally satisfy a target distance matrix.
 
 No prior scientific background is needed to work with PolyFold. It is built
 entirely with human intuition in mind.
 
 <img src='Assets/gd.gif' width='100%'/>
 <p align='center'>
-<em>PolyFold optimizes target T0864 in real-time via its Batch Gradient Descent feature</em>
+<em>PolyFold optimizes CASP target T0864 in real-time via its Batch Gradient Descent feature</em>
 </p>
 
 ## Dataset
