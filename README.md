@@ -113,8 +113,3 @@ Plugins > JavaFX > javafx:jlink
 ```
 5. Double click on `javafx:jlink`. This will trigger the build process.
 6. Run `target\PolyFold\bin\launcher.bat` to launch PolyFold
-
-## FAQ / Known Errors
-
-1. Unable to unzip archive on Mac
-This is due to a known issue with *.zip files in MacOS Catalina. It seems to be resolved by unzipping the file with a tool other than the Mac native Archive Utility. We recommend using 'The Unarchiver' available for free download on the app store.  

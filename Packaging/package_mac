@@ -2,14 +2,14 @@
 echo "Packaging Mac..."
 echo "Clearing old package..."
 rm ../Mac/PolyFold.tgz
-echo "Moving Mac template..."
-cp -r ./mac_template.app ../Mac/PolyFold.app
-echo "Copying Contents sub-directories..."
-cp -r ../PolyFold/target/PolyFold/* ../Mac/PolyFold.app/Contents
-echo "Copying classes directory..."
-cp -r ../PolyFold/target/classes ../Mac/PolyFold.app
+echo "Copying Mac template..."
+cp -r ./mac_template.app PolyFold.app
+echo "Copying target sub-directories..."
+cp -r ../PolyFold/target/PolyFold/* PolyFold.app/Contents
+cp -r ../PolyFold/target/classes PolyFold.app
 echo "Zipping..."
-tar cfz ../Mac/PolyFold.tgz ../Mac/PolyFold.app
+tar cfz PolyFold.tgz PolyFold.app
+mv PolyFold.tgz ../Mac
 echo "Cleaning up..."
-rm -rf ../Mac/PolyFold.app
+rm -rf PolyFold.app 
 echo "Done"
