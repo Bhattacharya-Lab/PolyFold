@@ -7,7 +7,7 @@
     <groupId>bhattacharya-lab</groupId>
     <artifactId>polyfold</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>PolyFold</name>
 
@@ -53,9 +53,29 @@
                     <release>${maven.compiler.release}</release>
                     <jlinkImageName>PolyFold</jlinkImageName>
                     <launcher>launcher</launcher>
-                    <mainClass>pf.PolyFold</mainClass>
+                    <mainClass>pf.Main</mainClass>
                 </configuration>
             </plugin>
+            <!-- For Windows Build -->
+<!--            <plugin>-->
+<!--                <artifactId>maven-shade-plugin</artifactId>-->
+<!--                <version>3.2.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>shade</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <transformers>-->
+<!--                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+<!--                                    <mainClass>pf.Main</mainClass>-->
+<!--                                </transformer>-->
+<!--                            </transformers>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -23,7 +23,6 @@
           <jlinkImageName>PolyFold</jlinkImageName>
           <launcher>launcher</launcher>
           <mainClass>pf.Main</mainClass>
-          <noManPages>true</noManPages>
         </configuration>
       </plugin>
       <plugin>
@@ -31,6 +30,7 @@
         <version>3.2.1</version>
         <executions>
           <execution>
+            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
