@@ -4,10 +4,9 @@ The goal of PolyFold is to give both researchers as well as non-experts an
 intuitive and easy-to-use visual interface which elucidates the process of 
 distance-based protein folding. PolyFold embeds powerful stochastic optimization 
 algorithms with on-demand customizations and interactive manipulations in real time 
-to maximally satisfy a target distance matrix.
+to maximally satisfy a target inter-residue distance matrix.
 
-No prior scientific background is needed to work with PolyFold. It is built
-entirely with human intuition in mind.
+If you find PolyFold useful, please cite our paper in bioRxiv available as preprint.
 
 <img src='Assets/gd.gif' width='100%'/>
 <p align='center'>
