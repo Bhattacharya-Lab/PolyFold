@@ -15,7 +15,7 @@ If you find PolyFold useful, please cite our paper in bioRxiv available as prepr
 </p>
 
 ## Dataset
-PolyFold's source code includes with it a set of 20 curated Residue-Residue files for various sized protein targets. Each entry in the table below contains a GIF visualization of the interaction map for one of these proteins as it is optimized. Each GIF has a label below it with the protein's name and the number of residues in that protein in parenthesis. All GIFs also link to the raw text Residue-Residue file for download for their respective protein. 
+PolyFold's source code includes with it a set of 20 curated residue-residue interaction map files for various sized protein targets. Each entry in the table below contains a GIF visualization of the interaction map for one of these proteins as it is optimized. Each GIF has a label below it with the protein's name and the number of residues in that protein in parenthesis. All GIFs also link to the raw RR file for download for their respective protein. 
 
 
 <a href="Dataset/1guuA.rr"><img src="Assets/1guuA.gif" width="150" height="150"/></a> | <a href="Dataset/1brfA.rr"><img src="Assets/1brfA.gif" width="150" height="150"/></a> | <a href="Dataset/1aapA.rr"><img src="Assets/1aapA.gif" width="150" height="150"/></a> | <a href="Dataset/1jo8A.rr"><img src="Assets/1jo8A.gif" width="150" height="150"/></a> | <a href="Dataset/1ku3A.rr"><img src="Assets/1ku3A.gif" width="150" height="150"/></a> 
