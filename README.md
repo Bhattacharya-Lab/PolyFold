@@ -7,7 +7,7 @@ with on-demand customizations and interactive manipulations in real-time to
 fold a protein molecule through the satisfaction of spatial constraints derived 
 from a protein's inter-residue distance matrix.
 
-A detailed user manual of PolyFold is available [here](data/MANUAL.pdf) 
+A detailed user manual of PolyFold is available [here](MANUAL.pdf).
 
 <img src='Assets/gd.gif' width='100%'/>
 <p align='center'>
