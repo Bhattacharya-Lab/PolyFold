@@ -9,7 +9,7 @@ from a protein's inter-residue distance matrix.
 
 A detailed user manual of PolyFold is available [here](MANUAL.pdf).
 
-If you find PolyFold useful, please [cite our paper in arXiv] (http://arxiv.org/abs/2002.11592) available as preprint.
+If you find PolyFold useful, please [cite our paper in arXiv](http://arxiv.org/abs/2002.11592) available as preprint.
 
 <img src='Assets/gd.gif' width='100%'/>
 <p align='center'>
