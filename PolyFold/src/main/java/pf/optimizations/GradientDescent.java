@@ -17,11 +17,10 @@ public class GradientDescent {
     carts = new Cartesian[state.length];
     for (int i = 0; i < state.length; i++) carts[i] = new Cartesian(state[i]);
     for (int i = 0; i < carts.length; i++) {
-      double[] prev = {0, 0, 0};
-      for (int j = i+1; j < carts.length; j++) {
-        double[] gradient = getGradient(i, j);
-        gradient = vectorAdd(prev, gradient);
-        applyGradient(j, gradient);
+      double[] grad = {0, 0, 0};
+      for (int j = i+2; j < carts.length; j++) {
+        grad = vectorAdd(getGradient(i, j), grad);
+        applyGradient(j, grad);
       }
     }
     normalizeCarts();
@@ -40,11 +39,11 @@ public class GradientDescent {
   }
 
   public static double piecewisePartial1(double k, double floor, double dist) {
-    return 2 * k - 2 * k * floor / dist;
+    return 2 * k - (2 * floor * k) / dist;
   }
 
   public static double piecewisePartial3(double k, double ceil, double dist) {
-    return 2 * k - 2 * k * ceil / dist;
+    return 2 * k - (2 * ceil * k) / dist;
   }
 
   public static double piecewisePartial4(double k, double dist) {
@@ -61,19 +60,18 @@ public class GradientDescent {
       double delY = piecewisePartial1(p.y, floor, dist);
       double delZ = piecewisePartial1(p.z, floor, dist);
       return new double[]{delX, delY, delZ};
-    } else if (dist >= floor && dist <= ceil) {
-      return new double[]{0.0, 0.0, 0.0};
-    } else if (dist > ceil && dist <= ceil + 0.5) {
+    }
+    if (floor <= dist && dist <= ceil) return new double[]{0.0, 0.0, 0.0};
+    if (ceil < dist && dist <= ceil + 0.5) {
       double delX = piecewisePartial3(p.x, ceil, dist);
       double delY = piecewisePartial3(p.y, ceil, dist);
       double delZ = piecewisePartial3(p.z, ceil, dist);
       return new double[]{delX, delY, delZ};
-    } else {
-      double delX = piecewisePartial4(p.x, dist);
-      double delY = piecewisePartial4(p.y, dist);
-      double delZ = piecewisePartial4(p.z, dist);
-      return new double[]{delX, delY, delZ};
     }
+    double delX = piecewisePartial4(p.x, dist);
+    double delY = piecewisePartial4(p.y, dist);
+    double delZ = piecewisePartial4(p.z, dist);
+    return new double[]{delX, delY, delZ};
   }
 
   public static void applyGradient(int i, double[] gradient) {
