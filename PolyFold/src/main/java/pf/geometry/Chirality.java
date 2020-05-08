@@ -47,13 +47,16 @@ public class Chirality {
     if (totalHelix != 0 && totalStrand != 0) {
       alphaScore = rightHandedHelix / (double) totalHelix;
       betaScore = leftHandedStrand / (double) totalStrand;
-      return alphaScore > 0.5 && betaScore > 0.5;
-    } else if (totalHelix == 0) {
-      betaScore = leftHandedStrand / (double) totalStrand;
-      return betaScore > 0.5;
-    } else {
-      alphaScore = rightHandedHelix / (double) totalHelix;
-      return alphaScore > 0.5;
+      return alphaScore >= 0.5 && betaScore >= 0.3;
     }
+    if (totalHelix != 0) {
+      alphaScore = rightHandedHelix / (double) totalHelix;
+      return alphaScore >= 0.5;
+    }
+    if (totalStrand != 0) {
+      betaScore = leftHandedStrand / (double) totalStrand;
+      return betaScore >= 0.3;
+    }
+    return true;
   }
 }
