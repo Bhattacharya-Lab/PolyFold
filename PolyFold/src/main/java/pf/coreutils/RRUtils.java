@@ -29,7 +29,7 @@ public class RRUtils {
     int actualSize = 0;
     HashSet<String> pairs = new HashSet<>();
     expectedDistance = new double[sequenceLen][sequenceLen];
-    Scoring.contactTable = new double[sequenceLen][sequenceLen][3];
+    Scoring.contactTable = new double[sequenceLen][sequenceLen][2];
     String currentLine = br.readLine();
     while (currentLine != null) {
       String[] data = currentLine.split(" ");
@@ -46,11 +46,8 @@ public class RRUtils {
         // celing distance
         Scoring.contactTable[residue1][residue2][1] = ceil;
         Scoring.contactTable[residue2][residue1][1] = ceil;
-        // probability of contact, always 1
-        Scoring.contactTable[residue1][residue2][2] = 1.0;
-        Scoring.contactTable[residue2][residue1][2] = 1.0;
-        expectedDistance[residue1][residue2] = (
-            (Double.parseDouble(data[2]) + Double.parseDouble(data[3])) / 2.0);
+        expectedDistance[residue1][residue2] = (floor + ceil) / 2.0;
+        expectedDistance[residue2][residue1] = (floor + ceil) / 2.0;
       }
       currentLine = br.readLine();
     }
