@@ -30,4 +30,4 @@ PolyFold's source code includes with it a set of 20 curated residue-residue inte
 
 ## Installation
 
-The provided manual gives instructions for installing the pre-packaged versions of PolyFold for Mac, Linux, and Windows or for building PolyFold from source. 
+The provided manual gives instructions for building PolyFold from source or installing the pre-packaged versions of PolyFold for Mac, Linux, and Windows.
