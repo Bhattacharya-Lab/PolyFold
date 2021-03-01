@@ -7,7 +7,7 @@ with on-demand customizations and interactive manipulations in real-time to
 fold a protein molecule through the satisfaction of spatial constraints derived 
 from a protein's inter-residue distance matrix.
 
-If you find PolyFold useful, please [cite our paper in PLOS ONE](https://doi.org/10.1371/journal.pone.0243331). A detailed user manual of PolyFold is available [here](MANUAL.pdf), accompanying the paper as supplementary documentation.
+If you find PolyFold useful, please cite our [paper in PLOS ONE](https://doi.org/10.1371/journal.pone.0243331). A detailed user manual of PolyFold is available [here](MANUAL.pdf), accompanying the paper as supplementary documentation.
 
 <img src='Assets/gd.gif' width='100%'/>
 <p align='center'>
